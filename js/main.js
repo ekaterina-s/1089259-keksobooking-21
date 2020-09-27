@@ -25,8 +25,8 @@ const generateHotels = () => {
       ],
     },
     location: {
-      x: Math.floor(Math.random() * 630) + 130,
-      y: Math.floor(Math.random() * 630) + 130
+      x: Math.floor(Math.random() * 630) + 230,
+      y: Math.floor(Math.random() * 630) + 230
     }
   };
   return hotel;
@@ -42,18 +42,20 @@ const map = document.querySelector('.map');
 map.classList.remove('map--faded');
 
 const mapPins = document.querySelector('.map__pins');
+console.log(mapPins);
 
 const template = document.querySelector('#pin')
   .content
   .querySelector('.map__pin');
 console.log(template);
 
-const renderDomElements = () => {
+const renderDomElements = (object) => {
   const domElement = template.cloneNode(true);
-  domElement.querySelector('.pin--main').
-  style = "left: {location.x + 570}px; top: {location.y + 375}px;";
-  domElement.querySelector('.pin--main').src = "{author.avatar}";
-  domElement.querySelector('.pin--main').alt = "{offer.title}";
+  console.log(domElement);
+  domElement.style.left = location.x + 570;
+  domElement.style.top = location.y + 375;
+  domElement.src = object.avatar;
+  domElement.alt = object.offer.title;
 
   return domElement;
 
@@ -61,12 +63,11 @@ const renderDomElements = () => {
 
 const fragment = document.createDocumentFragment();
 
-const addRenderedDomElementsToTheCode = (x, y, z) => {
-  for (let j = 0; j < y.length; j++) {
-    x.appendChild(renderDomElements(y[j]));
+const addRenderedDomElementsToTheCode = (createdFragment, array, space) => {
+  for (let j = 0; j < array.length; j++) {
+    createdFragment.appendChild(renderDomElements(array[j]));
   }
-  z.appendChild(x);
+  space.appendChild(createdFragment);
 };
 
 addRenderedDomElementsToTheCode(fragment, generatedhotels, mapPins);
-
