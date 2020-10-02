@@ -1,29 +1,30 @@
 'use strict';
 
-const generatedHotels = [];
-const generatedObjectsAmount = 8;
-const features = ["wifi", "dishwasher", "parking", "washer", "elevator", "conditioner"];
-const photos = [
+const GENERATED_OBJECTS_AMOUNT = 8;
+const FEATURES = ["wifi", "dishwasher", "parking", "washer", "elevator", "conditioner"];
+const PHOTOS = [
   "http://o0.github.io/assets/images/tokyo/hotel1.jpg",
   "http://o0.github.io/assets/images/tokyo/hotel2.jpg",
   "http://o0.github.io/assets/images/tokyo/hotel3.jpg"
 ];
-const accomodationTypes = ['palace', 'flat', 'house', 'bungalow'];
-const checkInOuts = ['12:00', '13:00', '14:00'];
+const ACCOMODATION_TYPES = ['palace', 'flat', 'house', 'bungalow'];
+const CHECKS_IN_OUTS = ['12:00', '13:00', '14:00'];
 
-const mapFaded = document.querySelector('.map').classList.remove('map--faded');
-const mapPins = document.querySelector('.map__pins');
+const generatedHotels = [];
 const template = document.querySelector('#pin').content;
 const mapPin = template.querySelector('.map__pin img');
-const fragment = document.createDocumentFragment();
 
-const MAP_PIN_WIDTH = mapPin.width;
-const MAP_PIN_HEIGHT = mapPin.height;
+const mapPinWidth = mapPin.width;
+const mapPinHeight = mapPin.height;
 
 const MAP_PIN_FROM_LEFT = 200;
 const MAP_PIN_FROM_TOP = 400;
-const mapPinXPosittion = MAP_PIN_FROM_LEFT - MAP_PIN_WIDTH / 2;
-const mapPinYPosittion = MAP_PIN_FROM_TOP - MAP_PIN_HEIGHT;
+const mapPinXPosition = MAP_PIN_FROM_LEFT - mapPinWidth / 2;
+const mapPinYPosition = MAP_PIN_FROM_TOP - mapPinHeight;
+
+const mapPinXFirstCoordinate = 0;
+const mapPinYFirstCoordinate = 130;
+const mapPinYSecondCoordinate = 630;
 
 const generateRandomArrayElement = (array) => {
   return array[Math.floor(Math.random() * array.length)];
@@ -31,11 +32,11 @@ const generateRandomArrayElement = (array) => {
 
 const generateRandomArrayLength = (array) => {
   const arrayResult = [];
-  const l = [];
-  l.length = Math.floor(Math.random() * array.length) + 0;
+  const newArray = [];
+  newArray.length = Math.floor(Math.random() * array.length);
 
-  for (let i = 0; i < l.length; i++) {
-    arrayResult.push(array[Math.floor(Math.random() * array.length) + 0]);
+  for (let i = 0; i < newArray.length; i++) {
+    arrayResult.push(array[Math.floor(Math.random() * array.length)]);
   }
   return arrayResult;
 };
@@ -47,51 +48,51 @@ const generateObject = (index) => {
     },
     offer: {
       title: 'Объявление',
-      address: {
-        x: Math.floor(Math.random() * MAP_PIN_WIDTH) + 0,
-        y: Math.floor(Math.random() * 630) + 130
-      },
+      address: 'location.x, location.y',
       price: 100,
-      type: generateRandomArrayElement(accomodationTypes),
+      type: generateRandomArrayElement(ACCOMODATION_TYPES),
       rooms: 2,
       guests: 4,
-      checkin: generateRandomArrayElement(checkInOuts),
-      checkout: generateRandomArrayElement(checkInOuts),
-      features: generateRandomArrayLength(features),
+      checkin: generateRandomArrayElement(CHECKS_IN_OUTS),
+      checkout: generateRandomArrayElement(CHECKS_IN_OUTS),
+      features: generateRandomArrayLength(FEATURES),
       description: 'описание',
-      photos: generateRandomArrayLength(photos),
+      photos: generateRandomArrayLength(PHOTOS),
     },
     location: {
-      x: Math.floor(Math.random() * MAP_PIN_WIDTH) + 0,
-      y: Math.floor(Math.random() * 630) + 130
+      x: Math.floor(Math.random() * mapPinWidth) + mapPinXFirstCoordinate,
+      y: Math.floor(Math.random() * mapPinYSecondCoordinate) + mapPinYFirstCoordinate
     }
   };
   return hotel;
 };
 
-const generateArrayOfHotels = () => {
-  for (let i = 0; i < generatedObjectsAmount; i++) {
+const generateArrayOfHotels = (amount) => {
+  for (let i = 0; i < amount; i++) {
     generatedHotels.push(generateObject(i));
   }
 };
 
-generateArrayOfHotels();
+generateArrayOfHotels(GENERATED_OBJECTS_AMOUNT);
+
+document.querySelector('.map').classList.remove('map--faded');
 
 const renderDomElements = (object) => {
   const domElement = template.cloneNode(true);
-  domElement.querySelector('.map__pin').style.left = object.location.x + mapPinXPosittion + 'px';
-  domElement.querySelector('.map__pin').style.top = object.location.y + mapPinYPosittion + 'px';
-  domElement.querySelector('.map__pin').src = object.avatar;
+  domElement.querySelector('.map__pin').style.left = `${object.location.x + mapPinXPosition}px`;
+  domElement.querySelector('.map__pin').style.top = `${object.location.y + mapPinYPosition}px`;
+  domElement.querySelector('.map__pin img').src = object.author.avatar;
   domElement.querySelector('.map__pin').alt = object.offer.title;
 
   return domElement;
 };
 
-const addRenderedDomElementsToTheCode = (createdFragment, array, space) => {
+const addRenderedPins = (array) => {
+  const fragment = document.createDocumentFragment();
   for (let i = 0; i < array.length; i++) {
-    createdFragment.appendChild(renderDomElements(array[i]));
+    fragment.appendChild(renderDomElements(array[i]));
   }
-  space.appendChild(createdFragment);
+  return document.querySelector('.map__pins').appendChild(fragment);
 };
 
-addRenderedDomElementsToTheCode(fragment, generatedHotels, mapPins);
+addRenderedPins(generatedHotels);
