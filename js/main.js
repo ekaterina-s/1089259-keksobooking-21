@@ -30,9 +30,10 @@ const mapPinXPosition = MAP_PIN_FROM_LEFT - mapPinWidth / 2;
 const mapPinYPosition = MAP_PIN_FROM_TOP - mapPinHeight;
 
 //  ищем в разметке элементы для активного/неактивного режима
-const adformHeaderDisabled = document.querySelector('.ad-form-header');
-const adformElementsDisabled = document.querySelectorAll('.ad-form__element');
-const mapFiltersForm = document.querySelector('.map__filters');
+// const adformHeaderDisabled = document.querySelector('.ad-form-header');
+const formElements = document.querySelectorAll('.map__filters, .ad-form-header, .ad-form__element');
+console.log(formElements);
+// const mapFiltersForm = document.querySelector('.map__filters');
 
 const mapPinMain = document.querySelector('.map__pin--main');
 const imgMapPinMain = mapPinMain.querySelector('img');
@@ -131,40 +132,27 @@ const addRenderedPins = (array) => {
   return document.querySelector('.map__pins').appendChild(fragment);
 };
 
-const enableFormElement = (formElement) => {
-  formElement.removeAttribute("disabled");
-
-  return formElement;
-};
-
-const enableFormElements = (formElements) => {
-  for (let i = 0; i < formElements.length; i++) {
-    formElements[i].removeAttribute("disabled");
+const enableOrDisableForm = (element) => {
+  if (element.length > 1) {
+    for (let i = 0; i < element.length; i++) {
+      if (element[i].hasAttribute('disabled')) {
+        element[i].removeAttribute("disabled");
+      } else {
+        element[i].setAttribute("disabled", "true");
+      }
+    }
+  } else {
+    if (element.hasAttribute('disabled')) {
+      element.removeAttribute("disabled");
+    } else {
+      element.setAttribute("disabled", "true");
+    }
   }
 
-  return formElements;
+  return (element);
 };
 
-//  фу-я присвоения disabled ОДНОМУ элементу формы
-const disableFormElement = (formElement) => {
-  formElement.setAttribute("disabled", "true");
-
-  return formElement;
-};
-
-//  фу-я присвоения disabled НЕСКОЛЬКИМ элементам формы
-const disableFormElements = (formElements) => {
-  for (let i = 0; i < formElements.length; i++) {
-    formElements[i].setAttribute("disabled", "true");
-  }
-
-  return formElements;
-};
-
-//  вызовы присвоения disabled
-disableFormElement(adformHeaderDisabled);
-disableFormElements(adformElementsDisabled);
-disableFormElement(mapFiltersForm);
+enableOrDisableForm(formElements);
 
 //  объявляем фу-ю добавления координат метки в неактивном сост в поле ввода
 const fillinInputFieldInactive = (input) => {
@@ -174,7 +162,6 @@ const fillinInputFieldInactive = (input) => {
 };
 
 fillinInputFieldInactive(addressField);
-
 //  объявляем фу-ю добавления координат метки в активном сост в поле ввода
 const fillinInputFieldActive = (input) => {
   input.value = `${mapPinMainXPositionActive}px, ${mapPinMainYPositionActive}px`;
@@ -186,9 +173,7 @@ const fillinInputFieldActive = (input) => {
 const turnOnActiveMode = () => {
   document.querySelector('.map').classList.remove('map--faded');
 
-  enableFormElement(adformHeaderDisabled);
-  enableFormElements(adformElementsDisabled);
-  enableFormElement(mapFiltersForm);
+  enableOrDisableForm(formElements);
 
   //  вызываем функцию добавления отрисованных элементов во фрагмент кода
   addRenderedPins(generatedHotels);
