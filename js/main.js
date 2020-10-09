@@ -14,6 +14,7 @@ const generatedHotels = [];
 
 // координаты ограничений
 const mapPinXFirstCoordinate = 0;
+const mapPinXSecondCoordinate = 960;
 const mapPinYFirstCoordinate = 130;
 const mapPinYSecondCoordinate = 630;
 
@@ -30,10 +31,7 @@ const mapPinXPosition = MAP_PIN_FROM_LEFT - mapPinWidth / 2;
 const mapPinYPosition = MAP_PIN_FROM_TOP - mapPinHeight;
 
 //  ищем в разметке элементы для активного/неактивного режима
-// const adformHeaderDisabled = document.querySelector('.ad-form-header');
 const formElements = document.querySelectorAll('.map__filters, .ad-form-header, .ad-form__element');
-console.log(formElements);
-// const mapFiltersForm = document.querySelector('.map__filters');
 
 const mapPinMain = document.querySelector('.map__pin--main');
 const imgMapPinMain = mapPinMain.querySelector('img');
@@ -56,6 +54,7 @@ const mapPinMainYPositionActive = MAP_PIN_MAIN_FROM_TOP + imgMapPinMainHeight;
 const addressField = document.querySelector('.ad-form__element #address');
 const roomNumber = document.querySelector('#room_number');
 const capacity = document.querySelector('#capacity');
+const capacityOptions = document.querySelectorAll('#capacity option');
 
 //  генерируем какой то массив случайных элементов
 const generateRandomArrayElement = (array) => {
@@ -94,7 +93,7 @@ const generateObject = (index) => {
       photos: generateRandomArrayLength(PHOTOS),
     },
     location: {
-      x: Math.floor(Math.random() * mapPinWidth) + mapPinXFirstCoordinate,
+      x: Math.floor(Math.random() * mapPinXSecondCoordinate) + mapPinXFirstCoordinate,
       y: Math.floor(Math.random() * mapPinYSecondCoordinate) + mapPinYFirstCoordinate
     }
   };
@@ -172,6 +171,7 @@ const fillinInputFieldActive = (input) => {
 //  объявляем фу-ю вкл актив режима
 const turnOnActiveMode = () => {
   document.querySelector('.map').classList.remove('map--faded');
+  document.querySelector('.ad-form').classList.remove('ad-form--disabled');
 
   enableOrDisableForm(formElements);
 
@@ -193,43 +193,27 @@ mapPinMain.addEventListener('keydown', (evt) => {
   }
 });
 
+const roomsAvailability = {
+  "1": [2],
+  "2": [2, 1],
+  "3": [2, 1, 0],
+  "100": [3]
+};
+
 const setDefaultChoice = () => {
-  capacity.value = "1";
-  capacity[0].setAttribute("disabled", "true");
-  capacity[1].setAttribute("disabled", "true");
-  capacity[3].setAttribute("disabled", "true");
+  for (let i = 0; i < capacityOptions.length; i++) {
+    capacity[i].setAttribute("disabled", "true");
+  }
+  capacity[2].removeAttribute("disabled", "true");
 };
 
 setDefaultChoice();
 
 roomNumber.addEventListener('change', () => {
-  if (roomNumber.value === "1") {
-    capacity.value = "1";
-    capacity[0].setAttribute("disabled", "true");
-    capacity[3].setAttribute("disabled", "true");
-    capacity[1].setAttribute("disabled", "true");
-    capacity[2].removeAttribute("disabled", "true");
+  for (let i = 0; i < capacityOptions.length; i++) {
+    capacity[i].setAttribute("disabled", "true");
   }
-
-  if (roomNumber.value === "2") {
-    capacity.value = "2";
-    capacity[0].setAttribute("disabled", "true");
-    capacity[3].setAttribute("disabled", "true");
-    capacity[1].removeAttribute("disabled", "true");
-    capacity[2].removeAttribute("disabled", "true");
-  }
-  if (roomNumber.value === "3") {
-    capacity.value = "3";
-    capacity[3].setAttribute("disabled", "true");
-    capacity[0].removeAttribute("disabled", "true");
-    capacity[1].removeAttribute("disabled", "true");
-    capacity[2].removeAttribute("disabled", "true");
-  }
-  if (roomNumber.value === "100") {
-    capacity.value = "0";
-    capacity[3].removeAttribute("disabled", "true");
-    capacity[0].setAttribute("disabled", "true");
-    capacity[1].setAttribute("disabled", "true");
-    capacity[2].setAttribute("disabled", "true");
+  for (let i = 0; i < roomsAvailability[roomNumber.value].length; i++) {
+    capacity[roomsAvailability[roomNumber.value][i]].removeAttribute("disabled");
   }
 });
