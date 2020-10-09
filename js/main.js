@@ -217,3 +217,4 @@ roomNumber.addEventListener('change', () => {
     capacity[roomsAvailability[roomNumber.value][i]].removeAttribute("disabled");
   }
 });
+
