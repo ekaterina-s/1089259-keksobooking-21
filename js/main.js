@@ -73,6 +73,10 @@ const generateRandomArrayLength = (array) => {
   return arrayResult;
 };
 
+const generateRandomCoordinate = (min, max) => {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
 //  генерируем объект
 const generateObject = (index) => {
   const hotel = {
@@ -93,8 +97,8 @@ const generateObject = (index) => {
       photos: generateRandomArrayLength(PHOTOS),
     },
     location: {
-      x: Math.floor(Math.random() * mapPinXSecondCoordinate) + mapPinXFirstCoordinate,
-      y: Math.floor(Math.random() * mapPinYSecondCoordinate) + mapPinYFirstCoordinate
+      x: generateRandomCoordinate(mapPinXFirstCoordinate, mapPinXSecondCoordinate),
+      y: generateRandomCoordinate(mapPinYFirstCoordinate, mapPinYSecondCoordinate)
     }
   };
   return hotel;
@@ -113,8 +117,8 @@ generateArrayOfHotels(GENERATED_OBJECTS_AMOUNT);
 //  пишем функцию отрисовки dom элементов в клон шаблона с объектом-параметром
 const renderDomElements = (object) => {
   const domElement = template.cloneNode(true);
-  domElement.querySelector('.map__pin').style.left = `${object.location.x + mapPinXPosition}px`;
-  domElement.querySelector('.map__pin').style.top = `${object.location.y + mapPinYPosition}px`;
+  domElement.querySelector('.map__pin').style.left = `${object.location.x}px`;
+  domElement.querySelector('.map__pin').style.top = `${object.location.y}px`;
   domElement.querySelector('.map__pin img').src = object.author.avatar;
   domElement.querySelector('.map__pin').alt = object.offer.title;
 
