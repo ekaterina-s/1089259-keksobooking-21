@@ -1,39 +1,39 @@
 'use strict';
+
 (function () {
-  const GENERATED_OBJECTS_AMOUNT = 8;
-  const formElements = document.querySelectorAll('.map__filters, .ad-form-header, .ad-form__element');
+  const template = document.querySelector('#pin').content;
+  document.querySelector('.map').classList.remove('map--faded');
 
+  const renderDomElements = (object) => {
+    const domElement = template.cloneNode(true);
+    domElement.querySelector('.map__pin').style.left = `${object.location.x}px`;
+    domElement.querySelector('.map__pin').style.top = `${object.location.y}px`;
+    domElement.querySelector('.map__pin img').src = object.author.avatar;
+    domElement.querySelector('.map__pin').alt = object.offer.title;
 
-  window.data.generateArrayOfHotels(GENERATED_OBJECTS_AMOUNT);
-
-  window.form.enableOrDisableForm(formElements);
-
-  window.form.fillinInputFieldInactive(window.form.addressField);
-
-  const turnOnActiveMode = () => {
-    document.querySelector('.map').classList.remove('map--faded');
-    document.querySelector('.ad-form').classList.remove('ad-form--disabled');
-
-    window.form.enableOrDisableForm(formElements);
-
-    //  вызываем функцию добавления отрисованных элементов во фрагмент кода
-    window.pin.addRenderedPins(window.data.generatedHotels);
+    return domElement;
   };
 
-  window.form.mapPinMain.addEventListener('mousedown', (evt) => {
-    if (evt.which === 1) {
-      turnOnActiveMode();
-      //  вызываем фу-ю заполнения адреса в активе
-      window.form.fillinInputFieldActive(window.form.addressField);
+  const successHandler = function (array) {
+    const fragment = document.createDocumentFragment();
+    for (let i = 0; i < array.length; i++) {
+      fragment.appendChild(renderDomElements(array[i]));
     }
-  });
+    return document.querySelector('.map__pins').appendChild(fragment);
+  };
 
-  window.form.mapPinMain.addEventListener('keydown', (evt) => {
-    if (evt.key === 'Enter') {
-      turnOnActiveMode();
-    }
-  });
+  const errorHandler = function (errorMessage) {
+    const node = document.createElement('div');
+    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
+    node.style.position = 'absolute';
+    node.style.left = 0;
+    node.style.right = 0;
+    node.style.fontSize = '30px';
 
-  window.form.setDefaultChoice();
+    node.textContent = errorMessage;
+    document.body.insertAdjacentElement('afterbegin', node);
+  };
+
+  window.load(successHandler, errorHandler);
 
 })();
