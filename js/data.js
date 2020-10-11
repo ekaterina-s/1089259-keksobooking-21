@@ -20,15 +20,6 @@
 
   // переменные для метки объявлений
   const template = document.querySelector('#pin').content;
-  const mapPin = template.querySelector('.map__pin img');
-  const mapPinWidth = mapPin.width;
-  const mapPinHeight = mapPin.height;
-
-  //  константы для метки объявлений
-  const MAP_PIN_FROM_LEFT = 200;
-  const MAP_PIN_FROM_TOP = 400;
-  const mapPinXPosition = MAP_PIN_FROM_LEFT - mapPinWidth / 2;
-  const mapPinYPosition = MAP_PIN_FROM_TOP - mapPinHeight;
 
   //  генерируем какой то массив случайных элементов
   const generateRandomArrayElement = (array) => {
@@ -86,8 +77,8 @@
 
   const renderDomElements = (object) => {
     const domElement = template.cloneNode(true);
-    domElement.querySelector('.map__pin').style.left = `${object.location.x + mapPinXPosition}px`;
-    domElement.querySelector('.map__pin').style.top = `${object.location.y + mapPinYPosition}px`;
+    domElement.querySelector('.map__pin').style.left = `${object.location.x}px`;
+    domElement.querySelector('.map__pin').style.top = `${object.location.y}px`;
     domElement.querySelector('.map__pin img').src = object.author.avatar;
     domElement.querySelector('.map__pin').alt = object.offer.title;
 
