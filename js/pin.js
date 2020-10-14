@@ -1,16 +1,22 @@
 'use strict';
 
 (function () {
-  const addRenderedPins = (array) => {
-    const fragment = document.createDocumentFragment();
-    for (let i = 0; i < array.length; i++) {
-      fragment.appendChild(window.data.renderDomElements(array[i]));
-    }
-    return document.querySelector('.map__pins').appendChild(fragment);
+
+  const template = document.querySelector('#pin').content;
+  document.querySelector('.map').classList.remove('map--faded');
+
+  const renderDomElements = (object) => {
+    const domElement = template.cloneNode(true);
+    domElement.querySelector('.map__pin').style.left = `${object.location.x}px`;
+    domElement.querySelector('.map__pin').style.top = `${object.location.y}px`;
+    domElement.querySelector('.map__pin img').src = object.author.avatar;
+    domElement.querySelector('.map__pin').alt = object.offer.title;
+
+    return domElement;
   };
 
   window.pin = {
-    addRenderedPins: addRenderedPins
+    renderDomElements: renderDomElements
   };
 
 })();
