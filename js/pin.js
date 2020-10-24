@@ -1,18 +1,17 @@
 'use strict';
 
-(function () {
+(() => {
   const template = document.querySelector('#pin').content;
 
   const domElementWidth = 50;
   const domElementHeight = 70;
 
-  const renderDomElements = (object) => {
+  const renderDomElements = (element) => {
     const domElement = template.cloneNode(true);
-    domElement.querySelector('.map__pin').style.left = `${object.location.x - domElementWidth / 2}px`;
-    domElement.querySelector('.map__pin').style.top = `${object.location.y - domElementHeight}px`;
-    domElement.querySelector('.map__pin img').src = object.author.avatar;
-    domElement.querySelector('.map__pin').alt = object.offer.title;
-
+    domElement.querySelector('.map__pin').style.left = `${element.location.x - domElementWidth / 2}px`;
+    domElement.querySelector('.map__pin').style.top = `${element.location.y - domElementHeight}px`;
+    domElement.querySelector('.map__pin img').src = element.author.avatar;
+    domElement.querySelector('.map__pin').alt = element.offer.title;
     return domElement;
   };
 

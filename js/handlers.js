@@ -1,16 +1,17 @@
 'use strict';
 
-(function () {
+(() => {
 
-  window.successHandler = function (array) {
-    const fragment = document.createDocumentFragment();
-    for (let i = 0; i < array.length; i++) {
-      fragment.appendChild(window.pin.renderDomElements(array[i]));
-    }
-    return document.querySelector('.map__pins').appendChild(fragment);
+  let hotels = [];
+
+  const successHandler = (data) => {
+    hotels = data;
+    let housingTypeValue = document.querySelector('#housing-type').value;
+
+    return window.filter.filterHotels(housingTypeValue, hotels);
   };
 
-  window.errorHandler = function (errorMessage) {
+  const errorHandler = (errorMessage) => {
     const node = document.createElement('div');
     node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
     node.style.position = 'absolute';
@@ -20,6 +21,11 @@
 
     node.textContent = errorMessage;
     document.body.insertAdjacentElement('afterbegin', node);
+  };
+
+  window.handlers = {
+    successHandler: successHandler,
+    errorHandler: errorHandler
   };
 
 })();
