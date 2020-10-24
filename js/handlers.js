@@ -6,7 +6,7 @@
 
   const successHandler = (data) => {
     hotels = data;
-    let housingTypeValue = document.querySelector('#housing-type').value;
+    const housingTypeValue = document.querySelector('#housing-type').value;
 
     return window.filter.filterHotels(housingTypeValue, hotels);
   };
