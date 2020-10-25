@@ -1,14 +1,14 @@
 'use strict';
 
 (() => {
-
-  let hotels = [];
+  let propertyTypes = [];
 
   const successHandler = (data) => {
-    hotels = data;
+    propertyTypes = data;
+    console.log(propertyTypes);
     const housingTypeValue = document.querySelector('#housing-type').value;
 
-    return window.filter.filterHotels(housingTypeValue, hotels);
+    return window.filter.filterHotels(housingTypeValue, propertyTypes);
   };
 
   const errorHandler = (errorMessage) => {
@@ -25,7 +25,8 @@
 
   window.handlers = {
     successHandler: successHandler,
-    errorHandler: errorHandler
+    errorHandler: errorHandler,
+    propertyTypes: propertyTypes
   };
 
 })();

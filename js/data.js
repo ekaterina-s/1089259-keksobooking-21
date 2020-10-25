@@ -7,14 +7,13 @@
   };
   const TIMEOUT_IN_MS = 10000;
 
-  const load = (onSuccess, onError) => {
+  const data = (onSuccess, onError) => {
     const xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
       if (xhr.status === StatusCode.OK) {
         onSuccess(xhr.response);
-
       } else {
         onError(`Статус ответа: ${xhr.status} ${xhr.statusText}`);
       }
@@ -32,7 +31,7 @@
     xhr.send();
   };
 
-  window.load = {
-    load: load
+  window.data = {
+    data: data
   };
 })();

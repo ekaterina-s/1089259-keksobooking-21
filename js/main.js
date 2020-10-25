@@ -3,6 +3,7 @@
 (() => {
 
   const formElements = document.querySelectorAll('.map__filters, .ad-form-header, .ad-form__element');
+
   window.form.enableOrDisableForm(formElements);
   window.form.fillinInputFieldInactive(window.form.addressField);
 
@@ -11,7 +12,7 @@
     document.querySelector('.ad-form').classList.remove('ad-form--disabled');
 
     window.form.enableOrDisableForm(formElements);
-    window.load.load(window.handlers.successHandler, window.handlers.errorHandler);
+    window.data.data(window.handlers.successHandler, window.handlers.errorHandler);
   };
 
   window.form.mapPinMain.addEventListener('mousedown', (evt) => {
@@ -29,7 +30,7 @@
   });
 
   window.filter.housingType.addEventListener('change', () => {
-    turnOnActiveMode();
+    window.data.data(window.handlers.successHandler, window.handlers.errorHandler);
   });
 
   window.form.setDefaultChoice();
