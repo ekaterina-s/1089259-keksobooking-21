@@ -5,8 +5,6 @@
   const housingType = document.querySelector('#housing-type');
   const mapPin = document.getElementsByClassName('map__pin');
 
-  console.log(window.handlers.propertyTypes);
-
   const filterHotels = (type, hotels) => {
     const fragment = document.createDocumentFragment();
     while (mapPin[0]) {

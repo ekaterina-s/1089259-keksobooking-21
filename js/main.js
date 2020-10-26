@@ -30,7 +30,7 @@
   });
 
   window.filter.housingType.addEventListener('change', () => {
-    window.data.data(window.handlers.successHandler, window.handlers.errorHandler);
+    window.handlers.successHandler(window.data.propertyTypes);
   });
 
   window.form.setDefaultChoice();
