@@ -19,7 +19,6 @@
   const mapPinMainYPositionActive = MAP_PIN_MAIN_FROM_TOP + imgMapPinMainHeight;
 
   //  ищем поле адрес
-  const addressField = document.querySelector('.ad-form__element #address');
   const roomNumber = document.querySelector('#room_number');
   const capacity = document.querySelector('#capacity');
   const capacityOptions = document.querySelectorAll('#capacity option');
@@ -58,7 +57,6 @@
     return input;
   };
 
-  fillinInputFieldInactive(addressField);
   //  объявляем фу-ю добавления координат метки в активном сост в поле ввода
   const fillinInputFieldActive = (input) => {
     input.value = `${mapPinMainXPositionActive}px, ${mapPinMainYPositionActive}px`;
@@ -84,12 +82,10 @@
   });
 
   window.form = {
-    enableOrDisableForm: enableOrDisableForm,
-    fillinInputFieldInactive: fillinInputFieldInactive,
-    fillinInputFieldActive: fillinInputFieldActive,
-    addressField: addressField,
-    setDefaultChoice: setDefaultChoice,
-    mapPinMain: mapPinMain
+    mapPinMain,
+    enableOrDisableForm,
+    fillinInputFieldInactive,
+    fillinInputFieldActive,
+    setDefaultChoice
   };
-
 })();
