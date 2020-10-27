@@ -7,34 +7,34 @@
 
   const housingType = document.querySelector('#housing-type');
 
-  window.enableOrDisableForm(formElements);
-  window.fillinInputFieldInactive(addressField);
+  window.form.enableOrDisableForm(formElements);
+  window.form.fillinInputFieldInactive(addressField);
 
   const turnOnActiveMode = () => {
     document.querySelector('.map').classList.remove('map--faded');
     document.querySelector('.ad-form').classList.remove('ad-form--disabled');
 
-    window.enableOrDisableForm(formElements);
-    window.data(window.successHandler, window.errorHandler);
+    window.form.enableOrDisableForm(formElements);
+    window.data.getData(window.handlers.successHandler, window.handlers.errorHandler);
   };
 
-  window.mapPinMain.addEventListener('mousedown', (evt) => {
+  window.form.mapPinMain.addEventListener('mousedown', (evt) => {
     if (evt.which === 1) {
       turnOnActiveMode();
       //  вызываем фу-ю заполнения адреса в активе
-      window.fillinInputFieldActive(addressField);
+      window.form.fillinInputFieldActive(addressField);
     }
   });
 
-  window.mapPinMain.addEventListener('keydown', (evt) => {
+  window.form.mapPinMain.addEventListener('keydown', (evt) => {
     if (evt.key === 'Enter') {
       turnOnActiveMode();
     }
   });
 
   housingType.addEventListener('change', () => {
-    window.successHandler(window.data.propertyTypes);
+    window.handlers.successHandler(window.data.propertyTypes);
   });
 
-  window.setDefaultChoice();
+  window.form.setDefaultChoice();
 })();

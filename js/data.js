@@ -7,7 +7,7 @@
   };
   const TIMEOUT_IN_MS = 10000;
 
-  window.data = (onSuccess, onError) => {
+  const getData = (onSuccess, onError) => {
     const xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
@@ -30,5 +30,9 @@
 
     xhr.open('GET', URL);
     xhr.send();
+  };
+
+  window.data = {
+    getData
   };
 })();

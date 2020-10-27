@@ -1,8 +1,8 @@
 'use strict';
 (function () {
 //  ищем в разметке элементы для активного/неактивного режима
-  window.mapPinMain = document.querySelector('.map__pin--main');
-  const imgMapPinMain = window.mapPinMain.querySelector('img');
+  const mapPinMain = document.querySelector('.map__pin--main');
+  const imgMapPinMain = mapPinMain.querySelector('img');
 
   const MAP_PIN_MAIN_FROM_LEFT = 570;
   const MAP_PIN_MAIN_FROM_TOP = 375;
@@ -30,7 +30,7 @@
     "100": ["0"]
   };
 
-  window.enableOrDisableForm = (element) => {
+  const enableOrDisableForm = (element) => {
     if (element.length > 1) {
       for (let i = 0; i < element.length; i++) {
         if (element[i].hasAttribute('disabled')) {
@@ -51,20 +51,20 @@
   };
 
   //  объявляем фу-ю добавления координат метки в неактивном сост в поле ввода
-  window.fillinInputFieldInactive = (input) => {
+  const fillinInputFieldInactive = (input) => {
     input.value = `${mapPinMainXPositionInactive}px, ${mapPinMainYPositionInactive}px`;
 
     return input;
   };
 
   //  объявляем фу-ю добавления координат метки в активном сост в поле ввода
-  window.fillinInputFieldActive = (input) => {
+  const fillinInputFieldActive = (input) => {
     input.value = `${mapPinMainXPositionActive}px, ${mapPinMainYPositionActive}px`;
 
     return input;
   };
 
-  window.setDefaultChoice = () => {
+  const setDefaultChoice = () => {
     for (let i = 0; i < capacityOptions.length; i++) {
       capacity[i].setAttribute("disabled", "true");
     }
@@ -80,4 +80,12 @@
       }
     }
   });
+
+  window.form = {
+    mapPinMain,
+    enableOrDisableForm,
+    fillinInputFieldInactive,
+    fillinInputFieldActive,
+    setDefaultChoice
+  };
 })();

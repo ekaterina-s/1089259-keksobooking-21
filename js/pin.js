@@ -6,7 +6,7 @@
   const domElementWidth = 50;
   const domElementHeight = 70;
 
-  window.renderDomElements = (element) => {
+  const renderDomElements = (element) => {
     const domElement = template.cloneNode(true);
     domElement.querySelector('.map__pin').style.left = `${element.location.x - domElementWidth / 2}px`;
     domElement.querySelector('.map__pin').style.top = `${element.location.y - domElementHeight}px`;
@@ -14,5 +14,9 @@
     domElement.querySelector('.map__pin').alt = element.offer.title;
 
     return domElement;
+  };
+
+  window.pin = {
+    renderDomElements
   };
 })();

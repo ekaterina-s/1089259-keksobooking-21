@@ -2,13 +2,13 @@
 
 (() => {
 
-  window.successHandler = (data) => {
+  const successHandler = (data) => {
     const housingTypeValue = document.querySelector('#housing-type').value;
 
-    return window.filterHotels(housingTypeValue, data);
+    return window.filter.filterHotels(housingTypeValue, data);
   };
 
-  window.errorHandler = (errorMessage) => {
+  const errorHandler = (errorMessage) => {
     const node = document.createElement('div');
     node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
     node.style.position = 'absolute';
@@ -18,5 +18,10 @@
 
     node.textContent = errorMessage;
     document.body.insertAdjacentElement('afterbegin', node);
+  };
+
+  window.handlers = {
+    successHandler,
+    errorHandler
   };
 })();
