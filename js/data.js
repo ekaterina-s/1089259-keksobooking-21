@@ -7,10 +7,9 @@
   };
   const TIMEOUT_IN_MS = 10000;
 
-  const data = (onSuccess, onError) => {
+  window.data = (onSuccess, onError) => {
     const xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
-    // let hutels = [];
 
     xhr.addEventListener('load', () => {
       if (xhr.status === StatusCode.OK) {
@@ -31,10 +30,5 @@
 
     xhr.open('GET', URL);
     xhr.send();
-  };
-
-  window.data = {
-    data: data,
-    // hutels: hutels,
   };
 })();

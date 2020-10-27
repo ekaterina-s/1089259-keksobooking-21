@@ -3,36 +3,38 @@
 (() => {
 
   const formElements = document.querySelectorAll('.map__filters, .ad-form-header, .ad-form__element');
+  const addressField = document.querySelector('.ad-form__element #address');
 
-  window.form.enableOrDisableForm(formElements);
-  window.form.fillinInputFieldInactive(window.form.addressField);
+  const housingType = document.querySelector('#housing-type');
+
+  window.enableOrDisableForm(formElements);
+  window.fillinInputFieldInactive(addressField);
 
   const turnOnActiveMode = () => {
     document.querySelector('.map').classList.remove('map--faded');
     document.querySelector('.ad-form').classList.remove('ad-form--disabled');
 
-    window.form.enableOrDisableForm(formElements);
-    window.data.data(window.handlers.successHandler, window.handlers.errorHandler);
+    window.enableOrDisableForm(formElements);
+    window.data(window.successHandler, window.errorHandler);
   };
 
-  window.form.mapPinMain.addEventListener('mousedown', (evt) => {
+  window.mapPinMain.addEventListener('mousedown', (evt) => {
     if (evt.which === 1) {
       turnOnActiveMode();
       //  вызываем фу-ю заполнения адреса в активе
-      window.form.fillinInputFieldActive(window.form.addressField);
+      window.fillinInputFieldActive(addressField);
     }
   });
 
-  window.form.mapPinMain.addEventListener('keydown', (evt) => {
+  window.mapPinMain.addEventListener('keydown', (evt) => {
     if (evt.key === 'Enter') {
       turnOnActiveMode();
     }
   });
 
-  window.filter.housingType.addEventListener('change', () => {
-    window.handlers.successHandler(window.data.propertyTypes);
+  housingType.addEventListener('change', () => {
+    window.successHandler(window.data.propertyTypes);
   });
 
-  window.form.setDefaultChoice();
-
+  window.setDefaultChoice();
 })();

@@ -1,8 +1,8 @@
 'use strict';
 (function () {
 //  ищем в разметке элементы для активного/неактивного режима
-  const mapPinMain = document.querySelector('.map__pin--main');
-  const imgMapPinMain = mapPinMain.querySelector('img');
+  window.mapPinMain = document.querySelector('.map__pin--main');
+  const imgMapPinMain = window.mapPinMain.querySelector('img');
 
   const MAP_PIN_MAIN_FROM_LEFT = 570;
   const MAP_PIN_MAIN_FROM_TOP = 375;
@@ -19,7 +19,6 @@
   const mapPinMainYPositionActive = MAP_PIN_MAIN_FROM_TOP + imgMapPinMainHeight;
 
   //  ищем поле адрес
-  const addressField = document.querySelector('.ad-form__element #address');
   const roomNumber = document.querySelector('#room_number');
   const capacity = document.querySelector('#capacity');
   const capacityOptions = document.querySelectorAll('#capacity option');
@@ -31,7 +30,7 @@
     "100": ["0"]
   };
 
-  const enableOrDisableForm = (element) => {
+  window.enableOrDisableForm = (element) => {
     if (element.length > 1) {
       for (let i = 0; i < element.length; i++) {
         if (element[i].hasAttribute('disabled')) {
@@ -52,21 +51,20 @@
   };
 
   //  объявляем фу-ю добавления координат метки в неактивном сост в поле ввода
-  const fillinInputFieldInactive = (input) => {
+  window.fillinInputFieldInactive = (input) => {
     input.value = `${mapPinMainXPositionInactive}px, ${mapPinMainYPositionInactive}px`;
 
     return input;
   };
 
-  fillinInputFieldInactive(addressField);
   //  объявляем фу-ю добавления координат метки в активном сост в поле ввода
-  const fillinInputFieldActive = (input) => {
+  window.fillinInputFieldActive = (input) => {
     input.value = `${mapPinMainXPositionActive}px, ${mapPinMainYPositionActive}px`;
 
     return input;
   };
 
-  const setDefaultChoice = () => {
+  window.setDefaultChoice = () => {
     for (let i = 0; i < capacityOptions.length; i++) {
       capacity[i].setAttribute("disabled", "true");
     }
@@ -82,14 +80,4 @@
       }
     }
   });
-
-  window.form = {
-    enableOrDisableForm: enableOrDisableForm,
-    fillinInputFieldInactive: fillinInputFieldInactive,
-    fillinInputFieldActive: fillinInputFieldActive,
-    addressField: addressField,
-    setDefaultChoice: setDefaultChoice,
-    mapPinMain: mapPinMain
-  };
-
 })();
