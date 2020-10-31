@@ -8,10 +8,13 @@
 
   const renderPins = (pin) => {
     const pinTemplate = template.cloneNode(true);
-    pinTemplate.querySelector('.map__pin').style.left = `${pin.location.x - pinTemplateWidth / 2}px`;
-    pinTemplate.querySelector('.map__pin').style.top = `${pin.location.y - pinTemplateHeight}px`;
-    pinTemplate.querySelector('.map__pin img').src = pin.author.avatar;
-    pinTemplate.querySelector('.map__pin').alt = pin.offer.title;
+    const mapPin = pinTemplate.querySelector('.map__pin');
+    const mapPinImg = pinTemplate.querySelector('.map__pin img');
+
+    mapPin.style.left = `${pin.location.x - pinTemplateWidth / 2}px`;
+    mapPin.style.top = `${pin.location.y - pinTemplateHeight}px`;
+    mapPinImg.src = pin.author.avatar;
+    mapPin.alt = pin.offer.title;
 
     return pinTemplate;
   };
