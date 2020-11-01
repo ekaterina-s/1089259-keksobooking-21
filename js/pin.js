@@ -3,20 +3,23 @@
 (() => {
   const template = document.querySelector('#pin').content;
 
-  const domElementWidth = 50;
-  const domElementHeight = 70;
+  const pinTemplateWidth = 50;
+  const pinTemplateHeight = 70;
 
-  const renderDomElements = (element) => {
-    const domElement = template.cloneNode(true);
-    domElement.querySelector('.map__pin').style.left = `${element.location.x - domElementWidth / 2}px`;
-    domElement.querySelector('.map__pin').style.top = `${element.location.y - domElementHeight}px`;
-    domElement.querySelector('.map__pin img').src = element.author.avatar;
-    domElement.querySelector('.map__pin').alt = element.offer.title;
+  const renderPins = (pin) => {
+    const pinTemplate = template.cloneNode(true);
+    const mapPin = pinTemplate.querySelector('.map__pin');
+    const mapPinImg = pinTemplate.querySelector('.map__pin img');
 
-    return domElement;
+    mapPin.style.left = `${pin.location.x - pinTemplateWidth / 2}px`;
+    mapPin.style.top = `${pin.location.y - pinTemplateHeight}px`;
+    mapPinImg.src = pin.author.avatar;
+    mapPin.alt = pin.offer.title;
+
+    return pinTemplate;
   };
 
   window.pin = {
-    renderDomElements
+    renderPins
   };
 })();
