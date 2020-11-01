@@ -15,7 +15,7 @@
       if (xhr.status === StatusCode.OK) {
         onSuccess(xhr.response);
         window.data.propertyTypes = xhr.response;
-        window.card.addRenderedСards(window.data.propertyTypes[0]);
+        window.card.addRenderedСard(window.data.propertyTypes[0]);
       } else {
         onError(`Статус ответа: ${xhr.status} ${xhr.statusText}`);
       }
@@ -34,6 +34,6 @@
   };
 
   window.data = {
-    getData
+    getData,
   };
 })();

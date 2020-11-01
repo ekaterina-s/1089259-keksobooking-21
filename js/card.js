@@ -5,7 +5,7 @@
   const map = document.querySelector('.map');
   const mapFiltersContainer = document.querySelector('.map__filters-container');
 
-  const renderCards = (hotel) => {
+  const renderCard = (hotel) => {
     const cardTemplate = template.cloneNode(true);
 
     cardTemplate.querySelector('.popup__title').textContent = hotel.offer.title;
@@ -27,10 +27,10 @@
     `Заезд после ${hotel.offer.checkin}, выезд до ${hotel.offer.checkout}`;
 
     const popupFeatures = {
-      'wifi': 'wifi',
+      'wifi': 'wi-fi',
       'dishwasher': 'dishwasher',
       'parking': 'parking',
-      'washer': '-washer',
+      'washer': 'washer',
       'elevator': 'elevator',
       'conditioner': 'conditioner'
     };
@@ -39,16 +39,15 @@
       const li = document.createElement('li');
       li.classList.add('popup__feature');
       li.classList.add(popupFeatures[hotel.offer.features[i]]);
-
-      cardTemplate.querySelector('.popup__features li').textContent = hotel.offer.features[i];
+      cardTemplate.querySelectorAll('.popup__features li')[i].textContent = popupFeatures[hotel.offer.features[i]];
     }
 
     cardTemplate.querySelector('.popup__description').textContent = hotel.offer.description;
 
     cardTemplate.querySelector('.popup__photos').innerHTML = '';
-    hotel.offer.photos.map((elem) => {
+    hotel.offer.photos.map((photo) => {
       const imgClone = template.querySelector('.popup__photo').cloneNode(true);
-      imgClone.src = elem;
+      imgClone.src = photo;
 
       return cardTemplate.querySelector('.popup__photos').appendChild(imgClone);
     });
@@ -58,12 +57,12 @@
     return cardTemplate;
   };
 
-  const addRenderedСards = (element) => {
-    const card = renderCards(element);
+  const addRenderedСard = (element) => {
+    const card = renderCard(element);
     map.insertBefore(card, mapFiltersContainer);
   };
 
   window.card = {
-    addRenderedСards
+    addRenderedСard
   };
 })();
