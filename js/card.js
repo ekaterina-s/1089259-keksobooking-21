@@ -22,6 +22,8 @@
 
   const renderCard = (hotel) => {
     const cardTemplate = template.cloneNode(true);
+    const popupFeatures = cardTemplate.querySelector('.popup__features');
+    const popupPhotos = cardTemplate.querySelector('.popup__photos');
 
     cardTemplate.querySelector('.popup__title').textContent = hotel.offer.title;
     cardTemplate.querySelector('.popup__text--address').textContent = hotel.offer.address;
@@ -35,25 +37,23 @@
     cardTemplate.querySelector('.popup__text--time').textContent =
     `Заезд после ${hotel.offer.checkin}, выезд до ${hotel.offer.checkout}`;
 
-    cardTemplate.querySelector('.popup__features').innerHTML = '';
-    const ul = document.createElement('ul');
-    ul.classList.add('popup__features');
+    popupFeatures.innerHTML = '';
     hotel.offer.features.map((feature) => {
       const li = document.createElement('li');
       li.classList.add('popup__feature');
       li.classList.add(POPUP_FEATURES[feature]);
       li.textContent = feature;
-      return cardTemplate.querySelector('.popup__features').appendChild(li);
+      return popupFeatures.appendChild(li);
     });
 
     cardTemplate.querySelector('.popup__description').textContent = hotel.offer.description;
 
-    cardTemplate.querySelector('.popup__photos').innerHTML = '';
+    popupPhotos.innerHTML = '';
     hotel.offer.photos.map((photo) => {
       const imgClone = template.querySelector('.popup__photo').cloneNode(true);
       imgClone.src = photo;
 
-      return cardTemplate.querySelector('.popup__photos').appendChild(imgClone);
+      return popupPhotos.appendChild(imgClone);
     });
 
     cardTemplate.querySelector('.popup__avatar').src = hotel.author.avatar;
