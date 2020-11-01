@@ -4,13 +4,13 @@
   const template = document.querySelector('#card').content;
   const map = document.querySelector('.map');
   const mapFiltersContainer = document.querySelector('.map__filters-container');
-  const HOTEL_OFFER_TYPES = {
+  const hotelOfferTypes = {
     'flat': 'Квартира',
     'bungalow': 'Бунгало',
     'house': 'Дом',
     'palace': 'Дворец'
   };
-  const POPUP_FEATURES = {
+  const featuresClasses = {
     'wifi': 'popup__feature--wifi',
     'dishwasher': 'popup__feature--dishwasher',
     'parking': 'popup__feature--parking',
@@ -29,7 +29,7 @@
     cardTemplate.querySelector('.popup__text--address').textContent = hotel.offer.address;
     cardTemplate.querySelector('.popup__text--price').textContent = `${hotel.offer.price} ₽/ночь`;
 
-    cardTemplate.querySelector('.popup__type').textContent = HOTEL_OFFER_TYPES[hotel.offer.type];
+    cardTemplate.querySelector('.popup__type').textContent = hotelOfferTypes[hotel.offer.type];
 
     cardTemplate.querySelector('.popup__text--capacity').textContent =
     `${hotel.offer.rooms} комнаты для ${hotel.offer.guests} гостей`;
@@ -41,7 +41,7 @@
     hotel.offer.features.map((feature) => {
       const li = document.createElement('li');
       li.classList.add('popup__feature');
-      li.classList.add(POPUP_FEATURES[feature]);
+      li.classList.add(featuresClasses[feature]);
       li.textContent = feature;
       return popupFeatures.appendChild(li);
     });
