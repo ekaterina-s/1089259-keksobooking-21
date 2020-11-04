@@ -18,16 +18,36 @@
   const mapPinMainXPositionActive = MAP_PIN_MAIN_FROM_LEFT + imgMapPinMainWidth / 2;
   const mapPinMainYPositionActive = MAP_PIN_MAIN_FROM_TOP + imgMapPinMainHeight;
 
-  //  ищем поле адрес
   const roomNumber = document.querySelector('#room_number');
   const capacity = document.querySelector('#capacity');
   const capacityOptions = document.querySelectorAll('#capacity option');
-
   const roomsAvailability = {
     "1": ["1"],
     "2": ["1", "2"],
     "3": ["1", "2", "3"],
     "100": ["0"]
+  };
+
+  const MIN_NAME_LENGTH = 30;
+  const MAX_NAME_LENGTH = 100;
+  const title = document.querySelector('#title');
+
+  const housingTypesPrice = {
+    'flat': '1000',
+    'bungalow': '0',
+    'house': '5000',
+    'palace': '10000'
+  };
+  const type = document.querySelector('#type');
+  const price = document.querySelector('#price');
+
+  const timein = document.querySelector('#timein');
+  const timeout = document.querySelector('#timeout');
+
+  const checkIncheckOut = {
+    '12:00': '12:00',
+    '13:00': '13:00',
+    '14:00': '14:00'
   };
 
   const enableOrDisableForm = (element) => {
@@ -81,8 +101,41 @@
     }
   });
 
+  title.addEventListener('input', () => {
+    const valueLength = title.value.length;
+    if (valueLength < MIN_NAME_LENGTH) {
+      title.setCustomValidity(`Ещё ${(MIN_NAME_LENGTH - valueLength)} симв.`);
+    } else if (valueLength > MAX_NAME_LENGTH) {
+      title.setCustomValidity(`Удалите лишние ' ${(valueLength - MAX_NAME_LENGTH)} симв.`);
+    } else {
+      title.setCustomValidity('');
+    }
+    title.reportValidity();
+  });
+
+  type.addEventListener('change', () => {
+    price.value = housingTypesPrice[type.value];
+  });
+
+  price.addEventListener('input', () => {
+    if (price.value < housingTypesPrice[type.value]) {
+      price.setCustomValidity(`Цена за ночь слишком мала`);
+    } else if (price.value > housingTypesPrice[type.value]) {
+      price.setCustomValidity(`Слишком большая цена за ночь`);
+    } else {
+      price.setCustomValidity('');
+    }
+    price.reportValidity();
+  });
+
+  timein.addEventListener('change', () => {
+    timeout.value = checkIncheckOut[timein.value];
+  });
+
   window.form = {
     mapPinMain,
+    mapPinMainXPositionActive,
+    mapPinMainYPositionActive,
     enableOrDisableForm,
     fillinInputFieldInactive,
     fillinInputFieldActive,

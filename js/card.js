@@ -2,6 +2,7 @@
 
 (() => {
   const template = document.querySelector('#card').content;
+
   const map = document.querySelector('.map');
   const mapFiltersContainer = document.querySelector('.map__filters-container');
   const hotelOfferTypes = {
@@ -18,7 +19,6 @@
     'elevator': 'popup__feature--elevator',
     'conditioner': 'popup__feature--conditioner'
   };
-
 
   const renderCard = (hotel) => {
     const cardTemplate = template.cloneNode(true);
@@ -58,6 +58,11 @@
 
     cardTemplate.querySelector('.popup__avatar').src = hotel.author.avatar;
 
+    const popupClose = cardTemplate.querySelector('.popup__close');
+
+    popupClose.addEventListener('click', () => {
+    });
+
     return cardTemplate;
   };
 
@@ -70,3 +75,4 @@
     addRenderedСard
   };
 })();
+
