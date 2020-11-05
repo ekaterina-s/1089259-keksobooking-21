@@ -23,10 +23,9 @@
     document.querySelector('.map').classList.remove('map--faded');
     document.querySelector('.ad-form').classList.remove('ad-form--disabled');
 
-    // не отображается гл метка!!!!!!!!!!
     window.form.enableOrDisableForm(formElements);
     window.form.fillinInputFieldActive(addressField);
-    // window.data.getData(window.handlers.successHandler, window.handlers.errorHandler);
+    window.data.getData(window.handlers.successHandler, window.handlers.errorHandler);
   };
 
   window.form.mapPinMain.addEventListener('mousedown', (evt) => {

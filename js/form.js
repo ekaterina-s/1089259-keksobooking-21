@@ -1,5 +1,5 @@
 'use strict';
-(function () {
+(() => {
 //  ищем в разметке элементы для активного/неактивного режима
   const mapPinMain = document.querySelector('.map__pin--main');
   const imgMapPinMain = mapPinMain.querySelector('img');

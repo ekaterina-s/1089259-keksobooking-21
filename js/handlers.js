@@ -2,10 +2,10 @@
 
 (() => {
 
-  const successHandler = (data) => {
+  const successHandler = () => {
     const housingTypeValue = document.querySelector('#housing-type').value;
 
-    return window.filter.filterHotels(housingTypeValue, data);
+    return window.filter.filterHotels(housingTypeValue, window.data.propertyTypes);
   };
 
   const errorHandler = (errorMessage) => {
