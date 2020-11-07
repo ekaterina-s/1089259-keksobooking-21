@@ -119,9 +119,10 @@
 
   price.addEventListener('input', () => {
     if (price.value < housingTypesPrice[type.value]) {
-      price.setCustomValidity(`Цена за ночь слишком мала`);
-    } else if (price.value > housingTypesPrice[type.value]) {
-      price.setCustomValidity(`Слишком большая цена за ночь`);
+      price.setCustomValidity('Цена за ночь слишком мала');
+    }
+    if (price.value > 1000000) {
+      price.setCustomValidity('Цена за ночь слишком велика');
     } else {
       price.setCustomValidity('');
     }

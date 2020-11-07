@@ -12,17 +12,16 @@
 
         const openedPopup = document.querySelector('.map__card');
         if (openedPopup) {
-          window.card.removeCard();
+          window.card.remove();
         }
         window.card.addRenderedСard(window.filteredHotels[pinNumber]);
-        evt.target.classList.add('map__pin--active');
+        evt.currentTarget.classList.add('map__pin--active');
       }
     };
   };
 
-  const removeEvents = (pin) => {
+  const remove = (pin) => {
     pin.removeEventListener('click', showPopup);
-    pin.removeEventListener('keydown', showPopup);
     pin.remove();
   };
 
@@ -37,13 +36,12 @@
     mapPin.alt = pin.offer.title;
 
     mapPin.addEventListener('click', showPopup(pinNumber));
-    mapPin.addEventListener('keydown', showPopup(pinNumber));
 
     return pinTemplate;
   };
 
   window.pin = {
     renderPin,
-    removeEvents,
+    remove,
   };
 })();

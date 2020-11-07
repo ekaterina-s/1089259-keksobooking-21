@@ -4,14 +4,19 @@
   const template = document.querySelector('#card').content;
   let card;
 
-  const removeCard = (evt) => {
-    if (evt) {
-      evt.target.removeEventListener('click', removeCard);
-    } else {
-      card.querySelector('.popup__close').removeEventListener('click', removeCard);
+  const remove = (evt) => {
+    if (card !== undefined) {
+      let mapPinActive = document.querySelector('.map__pin--active');
+      if (evt) {
+        evt.target.removeEventListener('click', remove);
+      } else {
+        card.querySelector('.popup__close').removeEventListener('click', remove);
+      }
+      if (mapPinActive !== null) {
+        mapPinActive.classList.remove('map__pin--active');
+      }
+      card.remove();
     }
-    document.querySelector('.map__pin--active').classList.remove('map__pin--active');
-    card.remove();
   };
 
   const map = document.querySelector('.map');
@@ -69,10 +74,11 @@
 
     card.querySelector('.popup__avatar').src = hotel.author.avatar;
 
-    card.querySelector('.popup__close').addEventListener('click', removeCard);
-    card.querySelector('.popup__close').addEventListener('keydown', (evt) => {
+    card.querySelector('.popup__close').addEventListener('click', remove);
+
+    document.addEventListener('keydown', (evt) => {
       if (evt.key === 'Escape') {
-        removeCard();
+        remove();
       }
     });
 
@@ -86,6 +92,6 @@
 
   window.card = {
     addRenderedСard,
-    removeCard
+    remove
   };
 })();

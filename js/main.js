@@ -39,8 +39,8 @@
       turnOnActiveMode();
     }
   });
-
   housingType.addEventListener('change', () => {
+    window.card.remove();
     window.handlers.successHandler(window.data.propertyTypes);
   });
 
