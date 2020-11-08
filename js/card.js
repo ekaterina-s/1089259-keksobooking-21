@@ -9,6 +9,7 @@
       let mapPinActive = document.querySelector('.map__pin--active');
       if (evt) {
         evt.target.removeEventListener('click', remove);
+        document.removeEventListener('keydown', remove);
       } else {
         card.querySelector('.popup__close').removeEventListener('click', remove);
       }
@@ -85,13 +86,13 @@
     return card;
   };
 
-  const addRenderedСard = (element) => {
+  const add = (element) => {
     renderCard(element);
     map.insertBefore(card, mapFiltersContainer);
   };
 
   window.card = {
-    addRenderedСard,
+    add,
     remove
   };
 })();

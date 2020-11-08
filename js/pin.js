@@ -14,7 +14,7 @@
         if (openedPopup) {
           window.card.remove();
         }
-        window.card.addRenderedСard(window.filteredHotels[pinNumber]);
+        window.card.add(window.filteredHotels[pinNumber]);
         evt.currentTarget.classList.add('map__pin--active');
       }
     };
