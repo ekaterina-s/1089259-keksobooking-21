@@ -19,8 +19,6 @@
   const mapPinMainYPositionActive = MAP_PIN_MAIN_FROM_TOP + imgMapPinMainHeight;
 
 
-
-
   const roomNumber = document.querySelector('#room_number');
   const capacity = document.querySelector('#capacity');
   const capacityOptions = document.querySelectorAll('#capacity option');
@@ -56,7 +54,6 @@
   };
 
 
-
   const enableOrDisableForm = (element) => {
     if (element.length > 1) {
       for (let i = 0; i < element.length; i++) {
@@ -90,8 +87,6 @@
 
     return input;
   };
-
-
 
 
   const setDefaultChoice = () => {
@@ -130,11 +125,9 @@
   price.addEventListener('input', () => {
     if (price.value < housingTypesPrice[type.value]) {
       price.setCustomValidity(`Минимальная цена за ночь ${housingTypesPrice[type.value]}`);
-    }
-     else if (price.value > MAX_PRICE_PER_NIGHT) {
+    } else if (price.value > MAX_PRICE_PER_NIGHT) {
       price.setCustomValidity(`Максимальная цена за ночь ${MAX_PRICE_PER_NIGHT}`);
-    }
-    else {
+    } else {
       price.setCustomValidity('');
     }
     price.reportValidity();
