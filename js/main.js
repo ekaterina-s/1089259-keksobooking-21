@@ -31,6 +31,31 @@
   window.form.mapPinMain.addEventListener('mousedown', (evt) => {
     if (evt.which === 1) {
       turnOnActiveMode();
+      let startCoords = {
+        x: evt.clientX,
+        y: evt.clientY
+      };
+      const onMouseMove = (moveEvt) => {
+        moveEvt.preventDefault();
+        const shift = {
+          x: startCoords.x - moveEvt.clientX,
+          y: startCoords.y = moveEvt.clientY
+        };
+        startCoords = {
+          x: moveEvt.clientX,
+          y: moveEvt.clientY
+        };
+        window.form.mapPinMain.style.top = `${window.form.mapPinMain.offsetTop - shift.y}px`;
+        window.form.mapPinMain.style.left = `${window.form.mapPinMain.offsetLeft - shift.x}px`;
+      };
+      const onMouseUp = (upEvt) => {
+        upEvt.preventDefault();
+
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', onMouseUp);
+      };
+      document.addEventListener('mousemove', onMouseMove);
+      document.addEventListener('mouseup', onMouseUp);
     }
   });
 
@@ -39,6 +64,9 @@
       turnOnActiveMode();
     }
   });
+
+
+
   housingType.addEventListener('change', () => {
     window.card.remove();
     window.handlers.successHandler(window.data.propertyTypes);

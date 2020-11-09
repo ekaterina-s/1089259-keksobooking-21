@@ -9,7 +9,6 @@
       let mapPinActive = document.querySelector('.map__pin--active');
       if (evt) {
         evt.target.removeEventListener('click', remove);
-        document.removeEventListener('keydown', remove);
       } else {
         card.querySelector('.popup__close').removeEventListener('click', remove);
       }
@@ -77,11 +76,13 @@
 
     card.querySelector('.popup__close').addEventListener('click', remove);
 
-    document.addEventListener('keydown', (evt) => {
+    const escape = document.addEventListener('keydown', (evt) => {
       if (evt.key === 'Escape') {
         remove();
       }
     });
+
+    document.removeEventListener('keydown', escape);
 
     return card;
   };

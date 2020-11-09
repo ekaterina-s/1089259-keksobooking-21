@@ -42,6 +42,6 @@
 
   window.pin = {
     renderPin,
-    remove,
+    remove
   };
 })();
