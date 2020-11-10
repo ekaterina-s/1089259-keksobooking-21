@@ -119,7 +119,7 @@
   });
 
   type.addEventListener('change', () => {
-    price.value = housingTypesPrice[type.value];
+    price.placeholder = housingTypesPrice[type.value];
   });
 
   price.addEventListener('input', () => {
