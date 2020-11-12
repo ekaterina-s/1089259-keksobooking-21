@@ -3,45 +3,71 @@
 (() => {
   const housingType = document.querySelector('#housing-type');
   const resetButton = document.querySelector('.ad-form__reset');
+  const mapPins = document.querySelector('.map__pins');
+  const mapFilters = document.querySelectorAll(`.map__filters .map__filter`);
+  const mapFeatures = document.querySelectorAll(`.map__features .map__checkbox`);
+
+  const MIN_Y = 130;
+  const MAX_Y = 630;
+
+  const MIN_X = 0;
+  const MAX_X = document.querySelector('.map__pins').offsetWidth;
 
   window.mode.turnOnInactiveMode();
 
-  window.mode.mapPinMain.addEventListener('mousedown', (evt) => {
+  const onMainMapPinMouseDown = (evt) => {
+    let isOnMainPin = true;
+
     if (evt.which === 1) {
       window.mode.turnOnActiveMode();
+      document.querySelector(`.map__filters`).removeAttribute(`disabled`);
+      mapFilters.forEach((mapFilter) => {
+        return mapFilter.removeAttribute(`disabled`);
+      });
+      mapFeatures.forEach((mapFeature) => {
+        return mapFeature.removeAttribute(`disabled`);
+      });
       let startCoords = {
         x: evt.clientX,
         y: evt.clientY
       };
-      console.log(startCoords.x, startCoords.y);
       const onMouseMove = (moveEvt) => {
         moveEvt.preventDefault();
         const shift = {
           x: startCoords.x - moveEvt.clientX,
           y: startCoords.y - moveEvt.clientY
         };
-        console.log(shift.x, shift.y);
         startCoords = {
           x: moveEvt.clientX,
           y: moveEvt.clientY
         };
-        console.log(startCoords.x, startCoords.y);
 
-        window.mode.mapPinMain.style.left = `${window.mode.mapPinMain.offsetLeft - shift.x}px`;
-        window.mode.mapPinMain.style.top = `${window.mode.mapPinMain.offsetTop - shift.y}px`;
+        const coordX = window.mode.mapPinMain.offsetLeft - shift.x;
+        const coordY = window.mode.mapPinMain.offsetTop - shift.y;
+        const addressX = Math.round(coordX + window.mode.mapPinMain.offsetWidth / 2);
+        const addressY = Math.round(coordY + window.mode.mapPinMain.scrollHeight);
 
-        window.form.fillinAddressField(window.mode.mapPinMain.style.left, window.mode.mapPinMain.style.top);
+        if (isOnMainPin && addressY <= MAX_Y && addressY >= MIN_Y && addressX <= MAX_X && addressX >= MIN_X) {
+          window.mode.mapPinMain.style.left = `${coordX}px`;
+          window.mode.mapPinMain.style.top = `${coordY}px`;
+          window.form.fillinAddressField(addressX, addressY);
+        }
       };
+
       const onMouseUp = (upEvt) => {
         upEvt.preventDefault();
 
-        document.removeEventListener(`mousemove`, onMouseMove);
-        document.removeEventListener(`mouseup`, onMouseUp);
+        mapPins.removeEventListener(`mousemove`, onMouseMove);
+        mapPins.removeEventListener(`mouseup`, onMouseUp);
+        mapPins.removeEventListener(`mouseup`, onMouseMove);
       };
-      document.addEventListener('mousemove', onMouseMove);
-      document.addEventListener('mouseup', onMouseUp);
+      mapPins.addEventListener('mousemove', onMouseMove);
+      mapPins.addEventListener('mouseup', onMouseMove);
+      mapPins.addEventListener('mouseup', onMouseUp);
     }
-  });
+  };
+
+  window.mode.mapPinMain.addEventListener('mousedown', onMainMapPinMouseDown);
 
   window.mode.mapPinMain.addEventListener('keydown', (evt) => {
     if (evt.key === 'Enter') {
