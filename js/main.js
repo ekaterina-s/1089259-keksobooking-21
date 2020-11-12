@@ -1,71 +1,53 @@
 'use strict';
 
 (() => {
-
-  const formElements =
-  document.querySelectorAll('.map__filters, .map__filter, .map__checkbox, .ad-form-header, .ad-form__element');
-
-  const addressField = document.querySelector('.ad-form__element #address');
   const housingType = document.querySelector('#housing-type');
   const resetButton = document.querySelector('.ad-form__reset');
 
-  window.form.enableOrDisableForm(formElements);
-  window.form.fillinInputFieldInactive(addressField);
+  window.mode.turnOnInactiveMode();
 
-  const turnOnInactiveMode = () => {
-    document.querySelector('.map').classList.add('map--faded');
-    document.querySelector('.ad-form').classList.add('ad-form--disabled');
-    window.form.enableOrDisableForm(formElements);
-    window.form.fillinInputFieldInactive();
-  };
-
-  const turnOnActiveMode = () => {
-    document.querySelector('.map').classList.remove('map--faded');
-    document.querySelector('.ad-form').classList.remove('ad-form--disabled');
-
-    window.form.enableOrDisableForm(formElements);
-    window.form.fillinInputFieldActive(addressField);
-    window.data.getData(window.handlers.successHandler, window.handlers.errorHandler);
-  };
-
-  window.form.mapPinMain.addEventListener('mousedown', (evt) => {
+  window.mode.mapPinMain.addEventListener('mousedown', (evt) => {
     if (evt.which === 1) {
-      turnOnActiveMode();
+      window.mode.turnOnActiveMode();
       let startCoords = {
         x: evt.clientX,
         y: evt.clientY
       };
+      console.log(startCoords.x, startCoords.y);
       const onMouseMove = (moveEvt) => {
         moveEvt.preventDefault();
         const shift = {
           x: startCoords.x - moveEvt.clientX,
-          y: startCoords.y = moveEvt.clientY
+          y: startCoords.y - moveEvt.clientY
         };
+        console.log(shift.x, shift.y);
         startCoords = {
           x: moveEvt.clientX,
           y: moveEvt.clientY
         };
-        window.form.mapPinMain.style.top = `${window.form.mapPinMain.offsetTop - shift.y}px`;
-        window.form.mapPinMain.style.left = `${window.form.mapPinMain.offsetLeft - shift.x}px`;
+        console.log(startCoords.x, startCoords.y);
+
+        window.mode.mapPinMain.style.left = `${window.mode.mapPinMain.offsetLeft - shift.x}px`;
+        window.mode.mapPinMain.style.top = `${window.mode.mapPinMain.offsetTop - shift.y}px`;
+
+        window.form.fillinAddressField(window.mode.mapPinMain.style.left, window.mode.mapPinMain.style.top);
       };
       const onMouseUp = (upEvt) => {
         upEvt.preventDefault();
 
-        document.removeEventListener('mousemove', onMouseMove);
-        document.removeEventListener('mouseup', onMouseUp);
+        document.removeEventListener(`mousemove`, onMouseMove);
+        document.removeEventListener(`mouseup`, onMouseUp);
       };
       document.addEventListener('mousemove', onMouseMove);
       document.addEventListener('mouseup', onMouseUp);
     }
   });
 
-  window.form.mapPinMain.addEventListener('keydown', (evt) => {
+  window.mode.mapPinMain.addEventListener('keydown', (evt) => {
     if (evt.key === 'Enter') {
-      turnOnActiveMode();
+      window.mode.turnOnActiveMode();
     }
   });
-
-
 
   housingType.addEventListener('change', () => {
     window.card.remove();
@@ -76,7 +58,7 @@
 
   resetButton.addEventListener('mousedown', (evt) => {
     if (evt.which === 1) {
-      turnOnInactiveMode();
+      window.mode.turnOnInactiveMode();
     }
 
   });

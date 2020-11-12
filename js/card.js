@@ -19,6 +19,13 @@
     }
   };
 
+  const escape = (evt) => {
+    if (evt.key === 'Escape') {
+      remove();
+    }
+    document.removeEventListener('keydown', escape);
+  };
+
   const map = document.querySelector('.map');
   const mapFiltersContainer = document.querySelector('.map__filters-container');
   const hotelOfferTypes = {
@@ -76,14 +83,7 @@
 
     card.querySelector('.popup__close').addEventListener('click', remove);
 
-    const escape = document.addEventListener('keydown', (evt) => {
-      if (evt.key === 'Escape') {
-        remove();
-      }
-    });
-
-    document.removeEventListener('keydown', escape);
-
+    document.addEventListener('keydown', escape);
     return card;
   };
 

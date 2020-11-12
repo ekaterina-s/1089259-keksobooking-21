@@ -1,24 +1,5 @@
 'use strict';
 (() => {
-//  ищем в разметке элементы для активного/неактивного режима
-  const mapPinMain = document.querySelector('.map__pin--main');
-  const imgMapPinMain = mapPinMain.querySelector('img');
-
-  const MAP_PIN_MAIN_FROM_LEFT = 570;
-  const MAP_PIN_MAIN_FROM_TOP = 375;
-
-  const imgMapPinMainWidth = imgMapPinMain.width;
-  const imgMapPinMainHeight = imgMapPinMain.height;
-
-  // координаты гл метки для неактива
-  const mapPinMainXPositionInactive = MAP_PIN_MAIN_FROM_LEFT + imgMapPinMainWidth / 2;
-  const mapPinMainYPositionInactive = MAP_PIN_MAIN_FROM_TOP + imgMapPinMainHeight / 2;
-
-  // координаты гл метки для актива
-  const mapPinMainXPositionActive = MAP_PIN_MAIN_FROM_LEFT + imgMapPinMainWidth / 2;
-  const mapPinMainYPositionActive = MAP_PIN_MAIN_FROM_TOP + imgMapPinMainHeight;
-
-
   const roomNumber = document.querySelector('#room_number');
   const capacity = document.querySelector('#capacity');
   const capacityOptions = document.querySelectorAll('#capacity option');
@@ -54,7 +35,7 @@
   };
 
 
-  const enableOrDisableForm = (element) => {
+  const enableOrDisable = (element) => {
     if (element.length > 1) {
       for (let i = 0; i < element.length; i++) {
         if (element[i].hasAttribute('disabled')) {
@@ -74,20 +55,11 @@
     return (element);
   };
 
-  //  объявляем фу-ю добавления координат метки в неактивном сост в поле ввода
-  const fillinInputFieldInactive = (input) => {
-    input.value = `${mapPinMainXPositionInactive}px, ${mapPinMainYPositionInactive}px`;
-
-    return input;
+  let addressField = document.querySelector(`#address`);
+  const fillinAddressField = (x, y) => {
+    addressField.value = `${x}, ${y}`;
+    return addressField.value;
   };
-
-  //  объявляем фу-ю добавления координат метки в активном сост в поле ввода
-  const fillinInputFieldActive = (input) => {
-    input.value = `${mapPinMainXPositionActive}px, ${mapPinMainYPositionActive}px`;
-
-    return input;
-  };
-
 
   const setDefaultChoice = () => {
     for (let i = 0; i < capacityOptions.length; i++) {
@@ -104,6 +76,8 @@
         capacityOptions[i].setAttribute("disabled", "true");
       }
     }
+    capacity.value = roomsAvailability[roomNumber.value][0];
+
   });
 
   title.addEventListener('input', () => {
@@ -120,12 +94,14 @@
 
   type.addEventListener('change', () => {
     price.placeholder = housingTypesPrice[type.value];
+    price.value = ``;
+    price.setCustomValidity(``);
   });
 
   price.addEventListener('input', () => {
-    if (price.value < housingTypesPrice[type.value]) {
+    if (+price.value < +housingTypesPrice[type.value]) {
       price.setCustomValidity(`Минимальная цена за ночь ${housingTypesPrice[type.value]}`);
-    } else if (price.value > MAX_PRICE_PER_NIGHT) {
+    } else if (+price.value > MAX_PRICE_PER_NIGHT) {
       price.setCustomValidity(`Максимальная цена за ночь ${MAX_PRICE_PER_NIGHT}`);
     } else {
       price.setCustomValidity('');
@@ -138,14 +114,8 @@
   });
 
   window.form = {
-    mapPinMain,
-    mapPinMainXPositionActive,
-    mapPinMainYPositionActive,
-    enableOrDisableForm,
-    fillinInputFieldInactive,
-    fillinInputFieldActive,
-
-
+    enableOrDisable,
+    fillinAddressField,
     setDefaultChoice
   };
 })();
