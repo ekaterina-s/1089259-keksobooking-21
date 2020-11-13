@@ -11,13 +11,13 @@
   const MIN_X = 0;
   const MAX_X = document.querySelector('.map__pins').offsetWidth;
 
-  window.mode.turnOnInactiveMode();
-
   const onMainMapPinMouseDown = (evt) => {
     let isOnMainPin = true;
 
     if (evt.which === 1) {
-      window.mode.turnOnActiveMode();
+      if (!window.mode.isActiveMode) {
+        window.mode.turnOnActiveMode();
+      }
       let startCoords = {
         x: evt.clientX,
         y: evt.clientY

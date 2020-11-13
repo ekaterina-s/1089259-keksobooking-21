@@ -22,10 +22,10 @@
   const turnOnInactiveMode = () => {
     document.querySelector('.map').classList.add('map--faded');
     document.querySelector('.ad-form').classList.add('ad-form--disabled');
-    // window.form.enableOrDisable(formElements);
     formElements.forEach((formElement) => {
       return formElement.setAttribute(`disabled`, `true`);
     });
+    window.mode.isActiveMode = false;
     window.form.fillinAddressField(mapPinMainXInactive, mapPinMainYInactive);
   };
 
@@ -36,12 +36,14 @@
       return formElement.removeAttribute(`disabled`);
     });
     window.form.fillinAddressField(mapPinMainXActive, mapPinMainYActive);
+    window.mode.isActiveMode = true;
     window.data.getData(window.handlers.successHandler, window.handlers.errorHandler);
   };
 
   window.mode = {
     mapPinMain,
     turnOnInactiveMode,
-    turnOnActiveMode
+    turnOnActiveMode,
+    isActiveMode: false
   };
 })();
