@@ -5,7 +5,7 @@
   const formElements =
   document.querySelectorAll('.map__filters, .map__filter, .map__features, .map__checkbox, .ad-form-header, .ad-form__element');
 
-  const mapPinMain = document.querySelector('.map__pin--main');
+  const mapPinMain = document.querySelector(`.map__pin--main`);
   const imgMapPinMain = mapPinMain.querySelector('img');
 
   const MAP_PIN_MAIN_FROM_LEFT = 570;
