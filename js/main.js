@@ -11,6 +11,8 @@
   const MIN_X = 0;
   const MAX_X = document.querySelector('.map__pins').offsetWidth;
 
+  window.mode.turnOnInactiveMode();
+
   const onMainMapPinMouseDown = (evt) => {
     let isOnMainPin = true;
 
@@ -28,10 +30,6 @@
           x: startCoords.x - moveEvt.clientX,
           y: startCoords.y - moveEvt.clientY
         };
-        startCoords = {
-          x: moveEvt.clientX,
-          y: moveEvt.clientY
-        };
 
         const coordX = window.mode.mapPinMain.offsetLeft - shift.x;
         const coordY = window.mode.mapPinMain.offsetTop - shift.y;
@@ -39,6 +37,10 @@
         const addressY = Math.round(coordY + window.mode.mapPinMain.scrollHeight);
 
         if (isOnMainPin && addressY <= MAX_Y && addressY >= MIN_Y && addressX <= MAX_X && addressX >= MIN_X) {
+          startCoords = {
+            x: moveEvt.clientX,
+            y: moveEvt.clientY
+          };
           window.mode.mapPinMain.style.left = `${coordX}px`;
           window.mode.mapPinMain.style.top = `${coordY}px`;
           window.form.fillinAddressField(addressX, addressY);
