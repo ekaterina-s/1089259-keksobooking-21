@@ -3,7 +3,7 @@
 (() => {
 
   const formElements =
-  document.querySelectorAll('.map__filters, .map__filter, .map__checkbox, .ad-form-header, .ad-form__element');
+  document.querySelectorAll('.map__filters, .map__filter, .map__features, .map__checkbox, .ad-form-header, .ad-form__element');
 
   const mapPinMain = document.querySelector('.map__pin--main');
   const imgMapPinMain = mapPinMain.querySelector('img');
@@ -22,14 +22,19 @@
   const turnOnInactiveMode = () => {
     document.querySelector('.map').classList.add('map--faded');
     document.querySelector('.ad-form').classList.add('ad-form--disabled');
-    window.form.enableOrDisable(formElements);
+    // window.form.enableOrDisable(formElements);
+    formElements.forEach((formElement) => {
+      return formElement.setAttribute(`disabled`, `true`);
+    });
     window.form.fillinAddressField(mapPinMainXInactive, mapPinMainYInactive);
   };
 
   const turnOnActiveMode = () => {
     document.querySelector('.map').classList.remove('map--faded');
     document.querySelector('.ad-form').classList.remove('ad-form--disabled');
-    window.form.enableOrDisable(formElements);
+    formElements.forEach((formElement) => {
+      return formElement.removeAttribute(`disabled`);
+    });
     window.form.fillinAddressField(mapPinMainXActive, mapPinMainYActive);
     window.data.getData(window.handlers.successHandler, window.handlers.errorHandler);
   };

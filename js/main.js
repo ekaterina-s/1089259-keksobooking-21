@@ -4,9 +4,6 @@
   const housingType = document.querySelector('#housing-type');
   const resetButton = document.querySelector('.ad-form__reset');
   const mapPins = document.querySelector('.map__pins');
-  const mapFilters = document.querySelectorAll(`.map__filters .map__filter`);
-  const adFormElements = document.querySelectorAll('.ad-form__element');
-  const mapFeatures = document.querySelectorAll(`.map__features .map__checkbox`);
 
   const MIN_Y = 130;
   const MAX_Y = 630;
@@ -21,16 +18,6 @@
 
     if (evt.which === 1) {
       window.mode.turnOnActiveMode();
-      document.querySelector(`.map__filters`).removeAttribute(`disabled`);
-      mapFilters.forEach((mapFilter) => {
-        return mapFilter.removeAttribute(`disabled`);
-      });
-      mapFeatures.forEach((mapFeature) => {
-        return mapFeature.removeAttribute(`disabled`);
-      });
-      adFormElements.forEach((adFormElement) => {
-        return adFormElement.removeAttribute(`disabled`);
-      });
       let startCoords = {
         x: evt.clientX,
         y: evt.clientY

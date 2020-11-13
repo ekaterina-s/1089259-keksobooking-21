@@ -34,27 +34,6 @@
     '14:00': '14:00'
   };
 
-
-  const enableOrDisable = (element) => {
-    if (element.length > 1) {
-      for (let i = 0; i < element.length; i++) {
-        if (element[i].hasAttribute('disabled')) {
-          element[i].removeAttribute("disabled");
-        } else {
-          element[i].setAttribute("disabled", "true");
-        }
-      }
-    } else {
-      if (element.hasAttribute('disabled')) {
-        element.removeAttribute("disabled");
-      } else {
-        element.setAttribute("disabled", "true");
-      }
-    }
-
-    return (element);
-  };
-
   let addressField = document.querySelector(`#address`);
   const fillinAddressField = (x, y) => {
     addressField.value = `${x}, ${y}`;
@@ -114,7 +93,6 @@
   });
 
   window.form = {
-    enableOrDisable,
     fillinAddressField,
     setDefaultChoice
   };
