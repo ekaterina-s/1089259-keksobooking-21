@@ -1,40 +1,85 @@
 'use strict';
 
 (() => {
-
-  const formElements = document.querySelectorAll('.map__filters, .ad-form-header, .ad-form__element');
-  const addressField = document.querySelector('.ad-form__element #address');
-
   const housingType = document.querySelector('#housing-type');
+  const resetButton = document.querySelector('.ad-form__reset');
+  const mapPins = document.querySelector('.map__pins');
 
-  window.form.enableOrDisableForm(formElements);
-  window.form.fillinInputFieldInactive(addressField);
+  const MIN_Y = 130;
+  const MAX_Y = 630;
 
-  const turnOnActiveMode = () => {
-    document.querySelector('.map').classList.remove('map--faded');
-    document.querySelector('.ad-form').classList.remove('ad-form--disabled');
+  const MIN_X = 0;
+  const MAX_X = document.querySelector('.map__pins').offsetWidth;
 
-    window.form.enableOrDisableForm(formElements);
-    window.data.getData(window.handlers.successHandler, window.handlers.errorHandler);
+  window.mode.turnOnInactiveMode();
+
+  const onMainMapPinMouseDown = (evt) => {
+    let isOnMainPin = true;
+
+    if (evt.which === 1) {
+      if (!window.mode.isActiveMode) {
+        window.mode.turnOnActiveMode();
+      }
+      let startCoords = {
+        x: evt.clientX,
+        y: evt.clientY
+      };
+      const onMouseMove = (moveEvt) => {
+        moveEvt.preventDefault();
+        const shift = {
+          x: startCoords.x - moveEvt.clientX,
+          y: startCoords.y - moveEvt.clientY
+        };
+
+        const coordX = window.mode.mapPinMain.offsetLeft - shift.x;
+        const coordY = window.mode.mapPinMain.offsetTop - shift.y;
+        const addressX = Math.round(coordX + window.mode.mapPinMain.offsetWidth / 2);
+        const addressY = Math.round(coordY + window.mode.mapPinMain.scrollHeight);
+
+        if (isOnMainPin && addressY <= MAX_Y && addressY >= MIN_Y && addressX <= MAX_X && addressX >= MIN_X) {
+          startCoords = {
+            x: moveEvt.clientX,
+            y: moveEvt.clientY
+          };
+          window.mode.mapPinMain.style.left = `${coordX}px`;
+          window.mode.mapPinMain.style.top = `${coordY}px`;
+          window.form.fillinAddressField(addressX, addressY);
+        }
+      };
+
+      const onMouseUp = (upEvt) => {
+        upEvt.preventDefault();
+
+        mapPins.removeEventListener(`mousemove`, onMouseMove);
+        mapPins.removeEventListener(`mouseup`, onMouseUp);
+        mapPins.removeEventListener(`mouseup`, onMouseMove);
+      };
+      mapPins.addEventListener('mousemove', onMouseMove);
+      mapPins.addEventListener('mouseup', onMouseMove);
+      mapPins.addEventListener('mouseup', onMouseUp);
+    }
   };
 
-  window.form.mapPinMain.addEventListener('mousedown', (evt) => {
-    if (evt.which === 1) {
-      turnOnActiveMode();
-      //  вызываем фу-ю заполнения адреса в активе
-      window.form.fillinInputFieldActive(addressField);
-    }
-  });
+  window.mode.mapPinMain.addEventListener('mousedown', onMainMapPinMouseDown);
 
-  window.form.mapPinMain.addEventListener('keydown', (evt) => {
+  window.mode.mapPinMain.addEventListener('keydown', (evt) => {
     if (evt.key === 'Enter') {
-      turnOnActiveMode();
+      window.mode.turnOnActiveMode();
     }
   });
 
   housingType.addEventListener('change', () => {
+    window.card.remove();
     window.handlers.successHandler(window.data.propertyTypes);
   });
 
   window.form.setDefaultChoice();
+
+  resetButton.addEventListener('mousedown', (evt) => {
+    if (evt.which === 1) {
+      window.mode.turnOnInactiveMode();
+    }
+
+  });
+
 })();
