@@ -4,6 +4,7 @@
   const housingType = document.querySelector('#housing-type');
   const resetButton = document.querySelector('.ad-form__reset');
   const mapPins = document.querySelector('.map__pins');
+  const form = document.querySelector(`.ad-form`);
 
   const MIN_Y = 130;
   const MAX_Y = 630;
@@ -68,18 +69,24 @@
     }
   });
 
-  housingType.addEventListener('change', () => {
+  housingType.addEventListener(`change`, () => {
     window.card.remove();
     window.handlers.successHandler(window.data.propertyTypes);
   });
 
   window.form.setDefaultChoice();
 
-  resetButton.addEventListener('mousedown', (evt) => {
+  resetButton.addEventListener(`mousedown`, (evt) => {
     if (evt.which === 1) {
       window.mode.turnOnInactiveMode();
     }
 
+  });
+
+  form.addEventListener(`submit`, (evt) => {
+    window.upload.upload(new FormData(form));
+    window.mode.turnOnInactiveMode();
+    evt.preventDefault();
   });
 
 })();

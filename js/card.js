@@ -1,46 +1,46 @@
 'use strict';
 
 (() => {
-  const template = document.querySelector('#card').content;
+  const template = document.querySelector(`#card`).content;
   let card;
 
   const remove = (evt) => {
     if (card !== undefined) {
-      let mapPinActive = document.querySelector('.map__pin--active');
+      let mapPinActive = document.querySelector(`.map__pin--active`);
       if (evt) {
-        evt.target.removeEventListener('click', remove);
+        evt.target.removeEventListener(`click`, remove);
       } else {
-        card.querySelector('.popup__close').removeEventListener('click', remove);
+        card.querySelector(`.popup__close`).removeEventListener(`click`, remove);
       }
       if (mapPinActive !== null) {
-        mapPinActive.classList.remove('map__pin--active');
+        mapPinActive.classList.remove(`map__pin--active`);
       }
       card.remove();
     }
   };
 
   const escape = (evt) => {
-    if (evt.key === 'Escape') {
+    if (evt.key === `Escape`) {
       remove();
     }
-    document.removeEventListener('keydown', escape);
+    document.removeEventListener(`keydown`, escape);
   };
 
-  const map = document.querySelector('.map');
-  const mapFiltersContainer = document.querySelector('.map__filters-container');
+  const map = document.querySelector(`.map`);
+  const mapFiltersContainer = document.querySelector(`.map__filters-container`);
   const hotelOfferTypes = {
-    'flat': 'Квартира',
-    'bungalow': 'Бунгало',
-    'house': 'Дом',
-    'palace': 'Дворец'
+    'flat': `Квартира`,
+    'bungalow': `Бунгало`,
+    'house': `Дом`,
+    'palace': `Дворец`
   };
   const featuresClasses = {
-    'wifi': 'popup__feature--wifi',
-    'dishwasher': 'popup__feature--dishwasher',
-    'parking': 'popup__feature--parking',
-    'washer': 'popup__feature--washer',
-    'elevator': 'popup__feature--elevator',
-    'conditioner': 'popup__feature--conditioner'
+    'wifi': `popup__feature--wifi`,
+    'dishwasher': `popup__feature--dishwasher`,
+    'parking': `popup__feature--parking`,
+    'washer': `popup__feature--washer`,
+    'elevator': `popup__feature--elevator`,
+    'conditioner': `popup__feature--conditioner`
   };
 
   const renderCard = (hotel) => {
@@ -81,9 +81,9 @@
 
     card.querySelector('.popup__avatar').src = hotel.author.avatar;
 
-    card.querySelector('.popup__close').addEventListener('click', remove);
+    card.querySelector('.popup__close').addEventListener(`click`, remove);
 
-    document.addEventListener('keydown', escape);
+    document.addEventListener(`keydown`, escape);
     return card;
   };
 
