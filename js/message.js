@@ -2,6 +2,7 @@
 
 (() => {
   const main = document.querySelector(`main`);
+  const errorButton = document.querySelector(`.error__button`);
 
   const closeTemplate = () => {
     let success = document.querySelector(`.success`);
@@ -14,7 +15,7 @@
       main.removeChild(success);
     }
     if (error !== null) {
-      document.querySelector(`.error__button`).removeEventListener(`click`, closeTemplate);
+      errorButton.removeEventListener(`click`, closeTemplate);
       main.removeChild(error);
     }
   };

@@ -1,16 +1,19 @@
 'use strict';
 
 (() => {
-  const housingType = document.querySelector('#housing-type');
-  const resetButton = document.querySelector('.ad-form__reset');
-  const mapPins = document.querySelector('.map__pins');
+  const housingEvents = [`#housing-type`, `#housing-price`, `#housing-rooms`, `#housing-guests`];
+  const housingFeatures =
+  [`#filter-elevator`, `#filter-wifi`, `#filter-parking`, `#filter-dishwasher`, `#filter-washer`, `#filter-conditioner`];
+
+  const resetButton = document.querySelector(`.ad-form__reset`);
+  const mapPins = document.querySelector(`.map__pins`);
   const form = document.querySelector(`.ad-form`);
 
   const MIN_Y = 130;
   const MAX_Y = 630;
 
   const MIN_X = 0;
-  const MAX_X = document.querySelector('.map__pins').offsetWidth;
+  const MAX_X = mapPins.offsetWidth;
 
   window.mode.turnOnInactiveMode();
 
@@ -55,23 +58,33 @@
         mapPins.removeEventListener(`mouseup`, onMouseUp);
         mapPins.removeEventListener(`mouseup`, onMouseMove);
       };
-      mapPins.addEventListener('mousemove', onMouseMove);
-      mapPins.addEventListener('mouseup', onMouseMove);
-      mapPins.addEventListener('mouseup', onMouseUp);
+      mapPins.addEventListener(`mousemove`, onMouseMove);
+      mapPins.addEventListener(`mouseup`, onMouseMove);
+      mapPins.addEventListener(`mouseup`, onMouseUp);
     }
   };
 
-  window.mode.mapPinMain.addEventListener('mousedown', onMainMapPinMouseDown);
+  window.mode.mapPinMain.addEventListener(`mousedown`, onMainMapPinMouseDown);
 
-  window.mode.mapPinMain.addEventListener('keydown', (evt) => {
-    if (evt.key === 'Enter') {
+  window.mode.mapPinMain.addEventListener(`keydown`, (evt) => {
+    if (evt.key === `Enter`) {
       window.mode.turnOnActiveMode();
     }
   });
 
-  housingType.addEventListener(`change`, () => {
-    window.card.remove();
-    window.handlers.successHandler(window.data.propertyTypes);
+  housingEvents.forEach((menuElement) => {
+    document.querySelector(menuElement).addEventListener(`change`, () => {
+      window.card.remove();
+      window.handlers.successHandler(window.data.propertyTypes);
+    });
+  });
+
+  housingFeatures.forEach((feature) => {
+    document.querySelector(feature).addEventListener(`click`, () => {
+      window.filter.change(window.housingFeaturesValues, document.querySelector(feature).value);
+      window.card.remove();
+      window.handlers.successHandler(window.data.propertyTypes);
+    });
   });
 
   window.form.setDefaultChoice();
@@ -84,7 +97,7 @@
   });
 
   form.addEventListener(`submit`, (evt) => {
-    window.upload.upload(new FormData(form));
+    window.upload(new FormData(form));
     window.mode.turnOnInactiveMode();
     evt.preventDefault();
   });
