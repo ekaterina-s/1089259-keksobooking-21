@@ -8,7 +8,7 @@
 
   const showPopup = (pinNumber) => {
     return (evt) => {
-      if (evt.type === `click` || evt.key === `Enter`) {
+      if (evt.type === `click` || window.util.isEnterKey(evt)) {
 
         const openedPopup = document.querySelector(`.map__card`);
         if (openedPopup) {

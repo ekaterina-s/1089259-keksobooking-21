@@ -1,6 +1,7 @@
 'use strict';
 
 (() => {
+  const MAX_PINS_ON_MAP_AMOUNT = 5;
 
   const change = (features, option) => {
     if (features[option] === true) {
@@ -9,8 +10,6 @@
       features[option] = true;
     }
   };
-
-  const MAX_PINS_ON_MAP_AMOUNT = 5;
 
   const filterHotels = (type, hotels) => {
     const mapPins = document.querySelectorAll(`.map__pin:not(.map__pin--main)`);

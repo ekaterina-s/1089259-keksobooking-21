@@ -2,6 +2,23 @@
 
 (() => {
   const template = document.querySelector(`#card`).content;
+
+  const map = document.querySelector(`.map`);
+  const mapFiltersContainer = document.querySelector(`.map__filters-container`);
+  const hotelOfferType = {
+    'flat': `Квартира`,
+    'bungalow': `Бунгало`,
+    'house': `Дом`,
+    'palace': `Дворец`
+  };
+  const featureClass = {
+    'wifi': `popup__feature--wifi`,
+    'dishwasher': `popup__feature--dishwasher`,
+    'parking': `popup__feature--parking`,
+    'washer': `popup__feature--washer`,
+    'elevator': `popup__feature--elevator`,
+    'conditioner': `popup__feature--conditioner`
+  };
   let card;
 
   const remove = (evt) => {
@@ -20,27 +37,10 @@
   };
 
   const escape = (evt) => {
-    if (evt.key === `Escape`) {
+    if (window.util.isEscapeKey(evt)) {
       remove();
     }
     document.removeEventListener(`keydown`, escape);
-  };
-
-  const map = document.querySelector(`.map`);
-  const mapFiltersContainer = document.querySelector(`.map__filters-container`);
-  const hotelOfferType = {
-    'flat': `Квартира`,
-    'bungalow': `Бунгало`,
-    'house': `Дом`,
-    'palace': `Дворец`
-  };
-  const featuresClasses = {
-    'wifi': `popup__feature--wifi`,
-    'dishwasher': `popup__feature--dishwasher`,
-    'parking': `popup__feature--parking`,
-    'washer': `popup__feature--washer`,
-    'elevator': `popup__feature--elevator`,
-    'conditioner': `popup__feature--conditioner`
   };
 
   const renderCard = (hotel) => {
@@ -64,7 +64,7 @@
     hotel.offer.features.map((feature) => {
       const li = document.createElement(`li`);
       li.classList.add(`popup__feature`);
-      li.classList.add(featuresClasses[feature]);
+      li.classList.add(featureClass[feature]);
       li.textContent = feature;
       return popupFeatures.appendChild(li);
     });
