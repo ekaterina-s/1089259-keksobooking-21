@@ -1,7 +1,7 @@
 'use strict';
 
 (() => {
-  const URL = 'https://21.javascript.pages.academy/keksobooking/data';
+  const URL = `https://21.javascript.pages.academy/keksobooking/data`;
   const StatusCode = {
     OK: 200
   };
@@ -9,9 +9,9 @@
 
   const getData = (onSuccess, onError) => {
     const xhr = new XMLHttpRequest();
-    xhr.responseType = 'json';
+    xhr.responseType = `json`;
 
-    xhr.addEventListener('load', () => {
+    xhr.addEventListener(`load`, () => {
       if (xhr.status === StatusCode.OK) {
         window.data.propertyTypes = xhr.response;
         onSuccess();
@@ -19,16 +19,16 @@
         onError(`Статус ответа: ${xhr.status} ${xhr.statusText}`);
       }
     });
-    xhr.addEventListener('error', () => {
-      onError('Произошла ошибка соединения');
+    xhr.addEventListener(`error`, () => {
+      onError(`Произошла ошибка соединения`);
     });
-    xhr.addEventListener('timeout', () => {
+    xhr.addEventListener(`timeout`, () => {
       onError(`Запрос не успел выполниться за ${xhr.timeout}мс`);
     });
 
     xhr.timeout = TIMEOUT_IN_MS;
 
-    xhr.open('GET', URL);
+    xhr.open(`GET`, URL);
     xhr.send();
   };
 
