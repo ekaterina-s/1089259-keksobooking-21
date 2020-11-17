@@ -29,8 +29,10 @@
       return formElement.setAttribute(`disabled`, `true`);
     });
     window.mode.isActiveMode = false;
-    window.form.fillinAddressField(mapPinMainXInactive, mapPinMainYInactive);
     adForm.reset();
+    window.form.fillinAddressField(mapPinMainXInactive, mapPinMainYInactive);
+    adForm.querySelector(`#price`).placeholder = window.form.housingTypePrice[window.form.type.value];
+
     window.card.remove();
     mapPins.forEach((pin) => {
       return window.pin.remove(pin);

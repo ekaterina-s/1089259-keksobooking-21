@@ -28,7 +28,7 @@
 
   const map = document.querySelector(`.map`);
   const mapFiltersContainer = document.querySelector(`.map__filters-container`);
-  const hotelOfferTypes = {
+  const hotelOfferType = {
     'flat': `Квартира`,
     'bungalow': `Бунгало`,
     'house': `Дом`,
@@ -52,7 +52,7 @@
     card.querySelector(`.popup__text--address`).textContent = hotel.offer.address;
     card.querySelector(`.popup__text--price`).textContent = `${hotel.offer.price} ₽/ночь`;
 
-    card.querySelector(`.popup__type`).textContent = hotelOfferTypes[hotel.offer.type];
+    card.querySelector(`.popup__type`).textContent = hotelOfferType[hotel.offer.type];
 
     card.querySelector(`.popup__text--capacity`).textContent =
     `${hotel.offer.rooms} комнаты для ${hotel.offer.guests} гостей`;

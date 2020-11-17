@@ -14,7 +14,6 @@
     xhr.addEventListener(`load`, () => {
       if (xhr.status === StatusCode.OK) {
         window.data.propertyTypes = xhr.response;
-        console.log(window.data.propertyTypes);
         onSuccess();
       } else {
         onError(`Статус ответа: ${xhr.status} ${xhr.statusText}`);

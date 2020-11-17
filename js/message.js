@@ -2,7 +2,6 @@
 
 (() => {
   const main = document.querySelector(`main`);
-  const errorButton = document.querySelector(`.error__button`);
 
   const closeTemplate = () => {
     let success = document.querySelector(`.success`);
@@ -11,11 +10,10 @@
     document.removeEventListener(`keydown`, escape);
     document.removeEventListener(`click`, closeTemplate);
 
-    if (success !== null) {
+    if (window.success) {
       main.removeChild(success);
-    }
-    if (error !== null) {
-      errorButton.removeEventListener(`click`, closeTemplate);
+      window.mode.turnOnInactiveMode();
+    } else {
       main.removeChild(error);
     }
   };

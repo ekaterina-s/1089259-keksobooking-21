@@ -15,7 +15,7 @@
   const title = document.querySelector(`#title`);
 
   const MAX_PRICE_PER_NIGHT = 1000000;
-  const housingTypesPrice = {
+  const housingTypePrice = {
     'flat': `1000`,
     'bungalow': `0`,
     'house': `5000`,
@@ -72,14 +72,14 @@
   });
 
   type.addEventListener(`change`, () => {
-    price.placeholder = housingTypesPrice[type.value];
+    price.placeholder = housingTypePrice[type.value];
     price.value = ``;
     price.setCustomValidity(``);
   });
 
   price.addEventListener(`input`, () => {
-    if (+price.value < +housingTypesPrice[type.value]) {
-      price.setCustomValidity(`Минимальная цена за ночь ${housingTypesPrice[type.value]}`);
+    if (+price.value < +housingTypePrice[type.value]) {
+      price.setCustomValidity(`Минимальная цена за ночь ${housingTypePrice[type.value]}`);
     } else if (+price.value > MAX_PRICE_PER_NIGHT) {
       price.setCustomValidity(`Максимальная цена за ночь ${MAX_PRICE_PER_NIGHT}`);
     } else {
@@ -94,6 +94,8 @@
 
   window.form = {
     fillinAddressField,
-    setDefaultChoice
+    setDefaultChoice,
+    type,
+    housingTypePrice
   };
 })();

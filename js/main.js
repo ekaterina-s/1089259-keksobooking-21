@@ -98,7 +98,6 @@
 
   form.addEventListener(`submit`, (evt) => {
     window.upload(new FormData(form));
-    window.mode.turnOnInactiveMode();
     evt.preventDefault();
   });
 

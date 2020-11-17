@@ -11,14 +11,14 @@
   };
 
   const successHandler = window.util.debounce(() => {
-    let hType = {
+    let housingTypeValue = {
       "type": document.querySelector(`#housing-type`).value,
       "rooms": document.querySelector(`#housing-rooms`).value,
       "price": document.querySelector(`#housing-price`).value,
       "guests": document.querySelector(`#housing-guests`).value,
     };
 
-    return window.filter.filterHotels(hType, window.data.propertyTypes);
+    return window.filter.filterHotels(housingTypeValue, window.data.propertyTypes);
   });
 
   const errorHandler = (errorMessage) => {
