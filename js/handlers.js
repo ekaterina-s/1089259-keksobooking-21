@@ -9,7 +9,6 @@
     "conditioner": false,
     "elevator": false
   };
-
   const successHandler = window.util.debounce(() => {
     let housingTypeValue = {
       "type": document.querySelector(`#housing-type`).value,
@@ -17,7 +16,6 @@
       "price": document.querySelector(`#housing-price`).value,
       "guests": document.querySelector(`#housing-guests`).value,
     };
-
     return window.filter.filterHotels(housingTypeValue, window.data.propertyTypes);
   });
 
@@ -35,6 +33,6 @@
 
   window.handlers = {
     successHandler,
-    errorHandler,
+    errorHandler
   };
 })();

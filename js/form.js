@@ -1,8 +1,13 @@
 'use strict';
 (() => {
+  const MIN_NAME_LENGTH = 30;
+  const MAX_NAME_LENGTH = 100;
+  const MAX_PRICE_PER_NIGHT = 1000000;
+
   const roomNumber = document.querySelector(`#room_number`);
   const capacity = document.querySelector(`#capacity`);
   const capacityOptions = document.querySelectorAll(`#capacity option`);
+
   const roomsAvailability = {
     "1": [`1`],
     "2": [`1`, `2`],
@@ -10,11 +15,8 @@
     "100": [`0`]
   };
 
-  const MIN_NAME_LENGTH = 30;
-  const MAX_NAME_LENGTH = 100;
   const title = document.querySelector(`#title`);
 
-  const MAX_PRICE_PER_NIGHT = 1000000;
   const housingTypePrice = {
     'flat': `1000`,
     'bungalow': `0`,
@@ -35,7 +37,7 @@
   };
 
   let addressField = document.querySelector(`#address`);
-  const fillinAddressField = (x, y) => {
+  const fillInAddressField = (x, y) => {
     addressField.value = `${x}, ${y}`;
     return addressField.value;
   };
@@ -93,7 +95,7 @@
   });
 
   window.form = {
-    fillinAddressField,
+    fillInAddressField,
     setDefaultChoice,
     type,
     housingTypePrice

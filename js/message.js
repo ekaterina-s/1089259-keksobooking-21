@@ -4,22 +4,20 @@
   const main = document.querySelector(`main`);
 
   const closeTemplate = () => {
-    let success = document.querySelector(`.success`);
-    let error = document.querySelector(`.error`);
 
     document.removeEventListener(`keydown`, escape);
     document.removeEventListener(`click`, closeTemplate);
 
     if (window.success) {
-      main.removeChild(success);
+      main.removeChild(document.querySelector(`.success`));
       window.mode.turnOnInactiveMode();
     } else {
-      main.removeChild(error);
+      main.removeChild(document.querySelector(`.error`));
     }
   };
 
   const escape = (evt) => {
-    if (evt.key === `Escape`) {
+    if (window.util.isEscapeKey(evt)) {
       closeTemplate();
     }
   };

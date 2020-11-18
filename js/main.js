@@ -1,19 +1,18 @@
 'use strict';
 
 (() => {
+  const mapPins = document.querySelector(`.map__pins`);
+  const MIN_Y = 130;
+  const MAX_Y = 630;
+  const MIN_X = 0;
+  const MAX_X = mapPins.offsetWidth;
+
   const housingEvents = [`#housing-type`, `#housing-price`, `#housing-rooms`, `#housing-guests`];
   const housingFeatures =
   [`#filter-elevator`, `#filter-wifi`, `#filter-parking`, `#filter-dishwasher`, `#filter-washer`, `#filter-conditioner`];
 
   const resetButton = document.querySelector(`.ad-form__reset`);
-  const mapPins = document.querySelector(`.map__pins`);
   const form = document.querySelector(`.ad-form`);
-
-  const MIN_Y = 130;
-  const MAX_Y = 630;
-
-  const MIN_X = 0;
-  const MAX_X = mapPins.offsetWidth;
 
   window.mode.turnOnInactiveMode();
 
@@ -47,7 +46,7 @@
           };
           window.mode.mapPinMain.style.left = `${coordX}px`;
           window.mode.mapPinMain.style.top = `${coordY}px`;
-          window.form.fillinAddressField(addressX, addressY);
+          window.form.fillInAddressField(addressX, addressY);
         }
       };
 
@@ -67,7 +66,7 @@
   window.mode.mapPinMain.addEventListener(`mousedown`, onMainMapPinMouseDown);
 
   window.mode.mapPinMain.addEventListener(`keydown`, (evt) => {
-    if (evt.key === `Enter`) {
+    if (window.util.isEnterKey(evt)) {
       window.mode.turnOnActiveMode();
     }
   });

@@ -17,8 +17,18 @@
     };
   };
 
+  const isEscapeKey = (evt) => {
+    return evt.key && (evt.key === `Escape` || evt.key === `Esc`);
+  };
+
+  const isEnterKey = (evt) => {
+    return evt.key && (evt.key === `Enter`);
+  };
+
   window.util = {
-    debounce
+    debounce,
+    isEscapeKey,
+    isEnterKey
   };
 })();
 
