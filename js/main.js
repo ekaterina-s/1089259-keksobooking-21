@@ -5,7 +5,7 @@
   const MAX_Y = 630;
   const MIN_X = 0;
   const mapPins = document.querySelector(`.map__pins`);
-  const MAX_X = mapPins.offsetWidth;
+  const maxX = mapPins.offsetWidth;
 
   const housingEvents = [`#housing-type`, `#housing-price`, `#housing-rooms`, `#housing-guests`];
   const housingFeatures =
@@ -39,7 +39,7 @@
         const addressX = Math.round(coordX + window.mode.mapPinMain.offsetWidth / 2);
         const addressY = Math.round(coordY + window.mode.mapPinMain.scrollHeight);
 
-        if (isOnMainPin && addressY <= MAX_Y && addressY >= MIN_Y && addressX <= MAX_X && addressX >= MIN_X) {
+        if (isOnMainPin && addressY <= MAX_Y && addressY >= MIN_Y && addressX <= maxX && addressX >= MIN_X) {
           startCoords = {
             x: moveEvt.clientX,
             y: moveEvt.clientY

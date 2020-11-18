@@ -3,6 +3,7 @@
 (() => {
   const MAP_PIN_MAIN_FROM_LEFT = 570;
   const MAP_PIN_MAIN_FROM_TOP = 375;
+  const maxX = document.querySelector(`.map__pins`).offsetWidth;
 
   const formElements =
   document.querySelectorAll(`.map__filters, .map__filter, .map__features, .map__checkbox, .ad-form-header, .ad-form__element`);
@@ -12,9 +13,10 @@
   const mapPinMain = document.querySelector(`.map__pin--main`);
   const imgMapPinMain = mapPinMain.querySelector(`img`);
 
-  const imgMapPinMainWidth = imgMapPinMain.width;
-  const imgMapPinMainHeight = imgMapPinMain.height;
-  const mapPinMainXInactive = MAP_PIN_MAIN_FROM_LEFT + imgMapPinMainWidth / 2;
+
+  const imgMapPinMainWidth = imgMapPinMain.offsetWidth;
+  const imgMapPinMainHeight = imgMapPinMain.offsetHeight;
+  const mapPinMainXInactive = maxX / 2;
   const mapPinMainYInactive = MAP_PIN_MAIN_FROM_TOP + imgMapPinMainHeight / 2;
 
   const mapPinMainXActive = MAP_PIN_MAIN_FROM_LEFT + imgMapPinMainWidth / 2;

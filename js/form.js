@@ -88,6 +88,10 @@
     timeout.value = checkInСheckOut[timein.value];
   });
 
+  timeout.addEventListener(`change`, () => {
+    timein.value = checkInСheckOut[timeout.value];
+  });
+
   window.form = {
     fillInAddressField,
     setDefaultChoice,

@@ -15,6 +15,7 @@
   };
 
   const filterHotels = (type, hotels) => {
+    let filteredHotels = [];
     const mapPins = document.querySelectorAll(`.map__pin:not(.map__pin--main)`);
     const fragmentPin = document.createDocumentFragment();
 
@@ -22,7 +23,8 @@
       return window.pin.remove(pin);
     });
 
-    window.filteredHotels = hotels.filter((hotel) => {
+    for (let index = 0; index < hotels.length; index++) {
+      const hotel = hotels[index];
       let hotelOptions = {};
       let featuresCheck = true;
 
@@ -53,12 +55,13 @@
           featuresCheck = false;
         }
       }
-      return featuresCheck;
-    });
 
-    for (let i = 0; i < window.filteredHotels.length; i++) {
-      if (i < MAX_PINS_ON_MAP_AMOUNT) {
-        fragmentPin.appendChild(window.pin.render(window.filteredHotels[i], i));
+      if (featuresCheck && filteredHotels.length < MAX_PINS_ON_MAP_AMOUNT) {
+        filteredHotels.push(hotel);
+        fragmentPin.appendChild(window.pin.render(hotel));
+      }
+      if (filteredHotels.length >= MAX_PINS_ON_MAP_AMOUNT) {
+        break;
       }
     }
 
