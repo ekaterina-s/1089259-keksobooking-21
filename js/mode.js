@@ -7,6 +7,7 @@
   const formElements =
   document.querySelectorAll(`.map__filters, .map__filter, .map__features, .map__checkbox, .ad-form-header, .ad-form__element`);
   const adForm = document.querySelector(`.ad-form`);
+  const mapFiltersForm = document.querySelector(`.map__filters`);
 
   const mapPinMain = document.querySelector(`.map__pin--main`);
   const imgMapPinMain = mapPinMain.querySelector(`img`);
@@ -30,9 +31,9 @@
     });
     window.mode.isActiveMode = false;
     adForm.reset();
+    mapFiltersForm.reset();
     window.form.fillInAddressField(mapPinMainXInactive, mapPinMainYInactive);
     adForm.querySelector(`#price`).placeholder = window.form.housingTypePrice[window.form.type.value];
-
     window.card.remove();
     mapPins.forEach((pin) => {
       return window.pin.remove(pin);

@@ -1,6 +1,7 @@
 'use strict';
 
 (() => {
+  const mapPins = document.querySelector(`.map__pins`);
   const MIN_Y = 130;
   const MAX_Y = 630;
   const MIN_X = 0;
@@ -11,7 +12,6 @@
   [`#filter-elevator`, `#filter-wifi`, `#filter-parking`, `#filter-dishwasher`, `#filter-washer`, `#filter-conditioner`];
 
   const resetButton = document.querySelector(`.ad-form__reset`);
-  const mapPins = document.querySelector(`.map__pins`);
   const form = document.querySelector(`.ad-form`);
 
   window.mode.turnOnInactiveMode();
