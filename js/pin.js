@@ -3,8 +3,8 @@
 (() => {
   const template = document.querySelector(`#pin`).content;
 
-  const pinTemplateWidth = 50;
-  const pinTemplateHeight = 70;
+  const PIN_TEMPLATE_WIDTH = 50;
+  const PIN_TEMPLATE_HEIGHT = 70;
 
   const showPopup = (pinNumber) => {
     return (evt) => {
@@ -25,13 +25,13 @@
     pin.remove();
   };
 
-  const renderPin = (pin, pinNumber) => {
+  const render = (pin, pinNumber) => {
     const pinTemplate = template.cloneNode(true);
     const mapPin = pinTemplate.querySelector(`.map__pin`);
     const mapPinImg = pinTemplate.querySelector(`.map__pin img`);
 
-    mapPin.style.left = `${pin.location.x - pinTemplateWidth / 2}px`;
-    mapPin.style.top = `${pin.location.y - pinTemplateHeight}px`;
+    mapPin.style.left = `${pin.location.x - PIN_TEMPLATE_WIDTH / 2}px`;
+    mapPin.style.top = `${pin.location.y - PIN_TEMPLATE_HEIGHT}px`;
     mapPinImg.src = pin.author.avatar;
     mapPin.alt = pin.offer.title;
 
@@ -41,7 +41,7 @@
   };
 
   window.pin = {
-    renderPin,
+    render,
     remove
   };
 })();

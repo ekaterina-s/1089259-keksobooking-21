@@ -10,6 +10,11 @@
     const xhr = new XMLHttpRequest();
     let message;
     xhr.responseType = `json`;
+    const showMessage = () => {
+      window.message.showTemplate(message);
+      document.addEventListener(`keydown`, window.message.escape);
+      document.addEventListener(`click`, window.message.closeTemplate);
+    };
 
     xhr.addEventListener(`load`, () => {
       if (xhr.status === 200) {
@@ -21,17 +26,13 @@
         message.querySelector(`.error__button`).addEventListener(`click`, window.message.closeTemplate);
         window.success = false;
       }
-      window.message.showTemplate(message);
-      document.addEventListener(`keydown`, window.message.escape);
-      document.addEventListener(`click`, window.message.closeTemplate);
+      showMessage();
     });
     xhr.addEventListener(`error`, () => {
       message = templateError.cloneNode(true);
       message.querySelector(`.error__button`).addEventListener(`click`, window.message.closeTemplate);
       window.success = false;
-      window.message.showTemplate(message);
-      document.addEventListener(`keydown`, window.message.escape);
-      document.addEventListener(`click`, window.message.closeTemplate);
+      showMessage();
     });
     xhr.open(`POST`, URL);
     xhr.send(data);

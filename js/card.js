@@ -29,18 +29,18 @@
       } else {
         card.querySelector(`.popup__close`).removeEventListener(`click`, remove);
       }
-      if (mapPinActive !== null) {
+      if (mapPinActive) {
         mapPinActive.classList.remove(`map__pin--active`);
       }
       card.remove();
     }
   };
 
-  const escape = (evt) => {
+  const onEscapePushed = (evt) => {
     if (window.util.isEscapeKey(evt)) {
       remove();
     }
-    document.removeEventListener(`keydown`, escape);
+    document.removeEventListener(`keydown`, onEscapePushed);
   };
 
   const renderCard = (hotel) => {
@@ -83,7 +83,7 @@
 
     card.querySelector(`.popup__close`).addEventListener(`click`, remove);
 
-    document.addEventListener(`keydown`, escape);
+    document.addEventListener(`keydown`, onEscapePushed);
     return card;
   };
 

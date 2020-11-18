@@ -30,7 +30,7 @@
   const timein = document.querySelector(`#timein`);
   const timeout = document.querySelector(`#timeout`);
 
-  const checkIncheckOut = {
+  const checkInСheckOut = {
     '12:00': `12:00`,
     '13:00': `13:00`,
     '14:00': `14:00`
@@ -43,30 +43,24 @@
   };
 
   const setDefaultChoice = () => {
-    for (let i = 0; i < capacityOptions.length; i++) {
-      capacity[i].setAttribute(`disabled`, `true`);
-    }
-    capacity[2].removeAttribute(`disabled`, `true`);
-  };
-
-  roomNumber.addEventListener(`change`, () => {
-    for (let i = 0; i < capacityOptions.length; i++) {
-      if (roomsAvailability[roomNumber.value].indexOf(capacityOptions[i].value) > -1) {
-        capacityOptions[i].removeAttribute(`disabled`);
+    for (const i of capacityOptions) {
+      if (roomsAvailability[roomNumber.value].indexOf(i.value) > -1) {
+        i.removeAttribute(`disabled`);
       } else {
-        capacityOptions[i].setAttribute(`disabled`, `true`);
+        i.setAttribute(`disabled`, `true`);
       }
     }
     capacity.value = roomsAvailability[roomNumber.value][0];
+  };
 
-  });
+  roomNumber.addEventListener(`change`, setDefaultChoice);
 
   title.addEventListener(`input`, () => {
     const valueLength = title.value.length;
     if (valueLength < MIN_NAME_LENGTH) {
       title.setCustomValidity(`Ещё ${(MIN_NAME_LENGTH - valueLength)} симв.`);
     } else if (valueLength > MAX_NAME_LENGTH) {
-      title.setCustomValidity(`Удалите лишние ' ${(valueLength - MAX_NAME_LENGTH)} симв.`);
+      title.setCustomValidity(`Удалите лишние ${(valueLength - MAX_NAME_LENGTH)} симв.`);
     } else {
       title.setCustomValidity(``);
     }
@@ -91,7 +85,7 @@
   });
 
   timein.addEventListener(`change`, () => {
-    timeout.value = checkIncheckOut[timein.value];
+    timeout.value = checkInСheckOut[timein.value];
   });
 
   window.form = {

@@ -2,6 +2,9 @@
 
 (() => {
   const MAX_PINS_ON_MAP_AMOUNT = 5;
+  const FIRST_PRICE = 10000;
+  const SECOND_PRICE = 50000;
+  const THIRD_PRICE = 50000;
 
   const change = (features, option) => {
     if (features[option] === true) {
@@ -30,11 +33,11 @@
           } else if (key === `price` && type[key] !== `any`) {
             let p = hotel.offer.price;
             switch (true) {
-              case p < 10000 : hotelOptions[key] = `low`;
+              case p < FIRST_PRICE : hotelOptions[key] = `low`;
                 break;
-              case p >= 10000 && p <= 50000 : hotelOptions[key] = `middle`;
+              case p >= FIRST_PRICE && p <= SECOND_PRICE : hotelOptions[key] = `middle`;
                 break;
-              case p > 50000 : hotelOptions[key] = `high`;
+              case p > THIRD_PRICE : hotelOptions[key] = `high`;
                 break;
             }
           } else {
@@ -53,8 +56,10 @@
       return featuresCheck;
     });
 
-    for (let i = 0; i < MAX_PINS_ON_MAP_AMOUNT & i < window.filteredHotels.length; i++) {
-      fragmentPin.appendChild(window.pin.renderPin(window.filteredHotels[i], i));
+    for (let i = 0; i < window.filteredHotels.length; i++) {
+      if (i < MAX_PINS_ON_MAP_AMOUNT) {
+        fragmentPin.appendChild(window.pin.render(window.filteredHotels[i], i));
+      }
     }
 
     const renderedPins = document.querySelector(`.map__pins`).appendChild(fragmentPin);

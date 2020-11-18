@@ -1,10 +1,10 @@
 'use strict';
 
 (() => {
-  const mapPins = document.querySelector(`.map__pins`);
   const MIN_Y = 130;
   const MAX_Y = 630;
   const MIN_X = 0;
+  const mapPins = document.querySelector(`.map__pins`);
   const MAX_X = mapPins.offsetWidth;
 
   const housingEvents = [`#housing-type`, `#housing-price`, `#housing-rooms`, `#housing-guests`];
